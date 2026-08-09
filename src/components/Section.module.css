@@ -1,0 +1,78 @@
+/* Section wrapper — generous vertical rhythm + reveal header */
+
+.section {
+  position: relative;
+  padding-block: var(--space-16);
+  isolation: isolate;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 18%;
+  left: -14%;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 8%, transparent), transparent 68%);
+  filter: blur(16px);
+  opacity: 0.65;
+  pointer-events: none;
+  animation: section-drift 12s ease-in-out infinite alternate;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  font-size: var(--text-h2);
+}
+
+/* Accent underline bar */
+.bar {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin-top: var(--space-1);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background-size: 200% 100%;
+  animation: section-bar-flow 3s ease-in-out infinite;
+}
+
+@keyframes section-drift {
+  to {
+    transform: translate3d(80px, 50px, 0) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+@keyframes section-bar-flow {
+  50% {
+    background-position: 100% 0;
+    width: 96px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: var(--space-10);
+  }
+
+  .header {
+    margin-bottom: var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section::before,
+  .bar {
+    animation: none;
+  }
+}

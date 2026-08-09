@@ -1,0 +1,279 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  transition:
+    transform 0.25s ease,
+    border-color 0.3s ease;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%);
+  opacity: 0;
+  transform: translate3d(-18%, 20%, 0) scale(0.6);
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: rgba(77, 124, 254, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.card:hover::after {
+  opacity: 0.7;
+  transform: translate3d(12%, -8%, 0) scale(1);
+}
+
+/* Featured: precise luminance hierarchy instead of a decorative gradient. */
+.featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--radius) + 1px);
+  border: 1px solid rgba(77, 124, 254, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  pointer-events: none;
+}
+
+.featuredTag {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  border: 1px solid rgba(77, 124, 254, 0.4);
+  border-radius: 999px;
+  padding: 2px var(--space-2);
+  line-height: 1.4;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-right: var(--space-8);
+}
+
+.title {
+  font-size: var(--text-h3);
+}
+
+.year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.summary {
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.link {
+  position: relative;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Interactive demo embed */
+.demo {
+  display: flex;
+  justify-content: center;
+}
+
+/* Featured: two-column layout (content + live phone demo) */
+.featured {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 254px);
+  grid-template-areas:
+    'header demo'
+    'summary demo'
+    'case demo'
+    'outcomes demo'
+    'tech demo'
+    'links demo';
+  column-gap: var(--space-4);
+  gap: var(--space-3) var(--space-4);
+}
+
+.featured .header {
+  grid-area: header;
+  padding-right: 0;
+}
+
+.featured .demo {
+  grid-area: demo;
+  padding-top: var(--space-2);
+}
+
+.featured .summary {
+  grid-area: summary;
+}
+
+.featured .caseStudy {
+  grid-area: case;
+}
+
+.featured .outcomes {
+  grid-area: outcomes;
+}
+
+.featured .tech {
+  grid-area: tech;
+  align-self: end;
+}
+
+.featured .links {
+  grid-area: links;
+  margin-top: 0;
+}
+
+.caseStudy {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.caseStudy > div {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+.caseStudy dt,
+.outcomeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.caseStudy dd {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.outcomes {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Impact checklist */
+.impact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.impact li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  color: var(--accent-2);
+  transform: translateY(1px);
+}
+
+@media (max-width: 720px) {
+  .card {
+    gap: var(--space-2);
+    padding: var(--space-3);
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .featuredTag {
+    top: var(--space-2);
+    right: var(--space-2);
+    padding-inline: 8px;
+  }
+
+  .featured {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'header'
+      'demo'
+      'summary'
+      'case'
+      'outcomes'
+      'tech'
+      'links';
+  }
+
+  .caseStudy > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .impact li {
+    gap: var(--space-1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transform: none !important;
+    transition: border-color 0.3s ease;
+  }
+}

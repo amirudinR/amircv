@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Free Crypto Backtesting Tools 2026: Full Comparison | Sentinel",
+    "href": "https://sentinel.redclawey.com/blog/free-crypto-backtesting-tools-2026",
+    "body": "Compare 6 free crypto backtesting tools in 2026: TradingView, Sentinel Bot, Backtrader, Jesse, QuantConnect, Freqtrade. Features, pros, cons, and ratings."
+  },
+  {
+    "title": "Freqtrade",
+    "href": "https://www.freqtrade.io/en/stable/",
+    "body": "Freqtrade is a free and open source crypto trading bot written in Python, designed to support all major exchanges and be controlled via Telegram or builtin Web UI."
+  },
+  {
+    "title": "Best Backtesting Software 2026, Ranked by Rigour | BacktestScore",
+    "href": "https://www.backtestscore.com/",
+    "body": "Updated for 2026. The best backtesting software of 2026, graded on rigour. BacktestScore runs the same reference strategy on every engine and grades each one on the soundness of its maths: cross-validation, trial-count deflation, realistic fills and costs."
+  },
+  {
+    "title": "Best Python Backtesting Libraries Compared (2026) - Algotradium",
+    "href": "https://algotradium.com/articles/best-python-backtesting-libraries-compared-2026/",
+    "body": "Comparison Table: Python Backtesting Libraries at a Glance: Let's summarize the key differences in a quick comparison. backtesting.py is the easiest to learn, p. Table of Contents. Introduction. Why Use a Python Backtesting Library? 1. backtesting.py – The Beginner's Best Friend."
+  },
+  {
+    "title": "Best Free Backtesting Software for Crypto and Multi-Asset Traders in...",
+    "href": "https://www.coinquant.ai/compare/free-backtesting-software-2025",
+    "body": "Backtrader is a free, open-source Python library for backtesting. It is powerful and flexible. You can test almost any strategy you can code in Python.Freqtrade is a free, open-source crypto trading bot with a built-in backtesting module. It supports Hyperopt for parameter optimization."
+  },
+  {
+    "title": "Best Algo Trading Software (2026)",
+    "href": "https://gitnux.org/best/algo-trading-software/",
+    "body": "Offers a Python-based backtesting and live trading framework for systematic trading across multiple markets and brokers.Provides an open-source Python backtesting library with strategy extensibility and broker and data integration for research workflows."
+  }
+]

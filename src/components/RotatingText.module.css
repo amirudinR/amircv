@@ -1,0 +1,32 @@
+.stack {
+  position: relative;
+  display: inline-grid;
+  vertical-align: top;
+}
+
+.item {
+  grid-area: 1 / 1;
+  min-width: max-content;
+  opacity: 0;
+  transform: translateY(0.3em);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.itemActive {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    opacity: 0;
+    transform: none;
+    transition: none;
+  }
+
+  .itemActive {
+    opacity: 1;
+  }
+}

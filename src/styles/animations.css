@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Midnight Signal — Reusable Animations
+   ========================================================================== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(77, 124, 254, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(77, 124, 254, 0.2);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Utility Classes */
+.anim-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.anim-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.anim-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.anim-gradient-pan {
+  animation: gradient-pan 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.anim-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .anim-float,
+  .anim-pulse-glow,
+  .anim-spin-slow,
+  .anim-gradient-pan,
+  .anim-blink {
+    animation: none !important;
+  }
+}

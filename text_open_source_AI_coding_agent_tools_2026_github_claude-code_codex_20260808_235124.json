@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Best AI Coding Agents in 2026, Ranked — MightyBot",
+    "href": "https://mightybot.ai/blog/coding-ai-agents-for-accelerating-engineering-workflows/",
+    "body": "2 weeks ago - Best AI coding agents in 2026, ranked: Claude Code, Codex, Grok Build, OpenCode, Cursor, Kimi K3, Gemini CLI, GitHub Copilot, Devin, Windsurf, and Replit Agent."
+  },
+  {
+    "title": "Best AI Coding Agent (2026): Ranked by Terminal-Bench, Price, and Source",
+    "href": "https://www.morphllm.com/ai-coding-agent",
+    "body": "4 days ago - CLI versions: GitHub releases for Claude Code v2.1.222 and Codex 0.146.0 · Codex with GPT-5.6 Sol and Claude Code with Opus 5 lead, and they are half a point apart: 89.5% and 89.1% on Terminal-Bench 2.1 as run by Artificial Analysis on the Terminus 2 harness, with GPT-5.6 Terra at 88.0%. Among the vendor-submitted pairs on tbench.ai, Claude Code with Fable 5 is 83.8% and Codex CLI with GPT-5.5 is 83.1%. Fable 5 is runnable again since July 1, 2026 and leads SWE-bench Pro at 80.3%. For open source, opencode (193,678 stars, MIT) is the most-starred agent."
+  },
+  {
+    "title": "GitHub - bradAGI/awesome-cli-coding-agents: Curated directory of terminal-native AI coding agents and the harnesses that orchestrate them. Covers open-source tools (Pi, OpenCode, Aider, Goose), platform agents (Claude Code, Codex, Gemini CLI), parallel runners, autonomous loops, and agent infrastructure. · GitHub",
+    "href": "https://github.com/bradAGI/awesome-cli-coding-agents",
+    "body": "July 6, 2026 - Curated directory of terminal-native AI coding agents and the harnesses that orchestrate them. Covers open-source tools (Pi, OpenCode, Aider, Goose), platform agents (Claude Code, Codex, Gemini CLI), parallel runners, autonomous loops, and agent ..."
+  },
+  {
+    "title": "Claude Code vs Codex vs OpenCode: Which AI Coding Agent Is Actually The Best in 2026? | by unicodeveloper | Medium",
+    "href": "https://medium.com/@unicodeveloper/claude-code-vs-codex-vs-opencode-which-ai-coding-agent-is-actually-the-best-in-2026-baa9f6fd5374",
+    "body": "May 22, 2026 - The 9 skills worth adding to Codex are covered here: 9 Must-Have Skills for Codex in 2026 · Highlights from the list: a “create-plan” skill that forces Codex to outline its approach before touching any files (solving the “it just started writing code” problem), a “gh-fix-ci” skill that autonomously resolves failing GitHub Actions, a “gh-address-comments” skill that processes all PR review feedback in one session, a “valyu” skill and CLI for docs + web search, great for deep research as well, and a “stop-slop” skill that strips AI writing patterns from your documentation."
+  },
+  {
+    "title": "Best AI Coding Agents in 2026: Harness, Cost, and Accuracy Compared",
+    "href": "https://www.firecrawl.dev/blog/best-ai-coding-agents",
+    "body": "1 week ago - Codex Cloud, Cursor Cloud Agents, and GitHub Copilot's cloud agent also run async and open pull requests. Claude Code added Routines for cron and GitHub triggers. Yes. OpenCode is open-source and free, you pay only for the model API you choose. Google Antigravity is free for individuals. Gemini CLI had a free tier of 1,000 requests per day, but free access for individuals ends June 18, 2026 as it transitions to Antigravity CLI."
+  },
+  {
+    "title": "Best CLI AI Coding Agents in 2026: Claude Code, Codex, OpenCode, GitHub Copilot CLI & More | DevToolLab Blog",
+    "href": "https://devtoollab.com/blog/top-cli-ai-coding-agents",
+    "body": "June 7, 2026 - Claude Code leads the field on reasoning depth, Codex CLI on sandboxed safety, OpenCode on model flexibility, GitHub Copilot CLI on GitHub-native integration, and Antigravity CLI on context window size and async orchestration."
+  }
+]

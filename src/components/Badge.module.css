@@ -1,0 +1,38 @@
+/* Skill/tech chip — level controls accent intensity */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+}
+
+/* Level 2 — accent-tinted border + soft glow */
+.level2 {
+  color: var(--text);
+  border-color: rgba(77, 124, 254, 0.45);
+  box-shadow: 0 0 12px rgba(77, 124, 254, 0.15);
+}
+
+/* Level 3 — strong accent tint + accent text */
+.level3 {
+  color: var(--accent);
+  background: rgba(77, 124, 254, 0.15);
+  border-color: rgba(77, 124, 254, 0.55);
+  box-shadow: 0 0 16px rgba(77, 124, 254, 0.2);
+}
