@@ -3,6 +3,8 @@ import type { Profile, Social } from '@/data/types';
 import { gsap } from '@/lib/gsap';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { useMagnetic } from '@/hooks/useMagnetic';
+import { SceneBoundary } from '@/components/SceneBoundary';
+import { shouldRenderScene } from '@/lib/webgl';
 import styles from './Hero.module.css';
 
 const HeroScene = lazy(() => import('@/three/HeroScene'));
@@ -59,6 +61,9 @@ export function Hero({ profile, socials }: HeroProps) {
   const secondaryCtaRef = useMagnetic<HTMLAnchorElement>();
   const [activeNodeId, setActiveNodeId] = useState<(typeof ARCHITECTURE_NODES)[number]['id']>('local');
   const [isSceneActive, setIsSceneActive] = useState(true);
+  // Decided once on mount: no WebGL, Save-Data, or a very low-spec device
+  // keeps the static paper artwork instead of mounting a scene it can't run.
+  const [sceneEnabled, setSceneEnabled] = useState(() => shouldRenderScene());
 
   // Pause the WebGL loop whenever the hero leaves the viewport.
   useEffect(() => {
@@ -152,9 +157,17 @@ export function Hero({ profile, socials }: HeroProps) {
           <span />
         </div>
          <div className={styles.canvas} aria-hidden="true">
-           <Suspense fallback={null}>
-             <HeroScene reducedMotion={reducedMotion} active={isSceneActive} />
-           </Suspense>
+           {sceneEnabled && (
+             <SceneBoundary fallback={null} onError={() => setSceneEnabled(false)}>
+               <Suspense fallback={null}>
+                 <HeroScene
+                   reducedMotion={reducedMotion}
+                   active={isSceneActive}
+                   onContextLost={() => setSceneEnabled(false)}
+                 />
+               </Suspense>
+             </SceneBoundary>
+           )}
          </div>
        </div>
 

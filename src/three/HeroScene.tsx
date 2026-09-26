@@ -100,12 +100,31 @@ function StaticFrame({ reducedMotion }: { reducedMotion: boolean }) {
   return null
 }
 
+// A context can come up fine and still be lost later to a driver crash or GPU
+// reset. Report it upward so the hero can unmount and show static artwork
+// instead of freezing on a dead frame.
+function ContextGuard({ onContextLost }: { onContextLost?: () => void }) {
+  const gl = useThree((s) => s.gl)
+  useEffect(() => {
+    if (!onContextLost) return
+    const canvas = gl.domElement
+    const handleLost = (event: Event) => {
+      event.preventDefault()
+      onContextLost()
+    }
+    canvas.addEventListener('webglcontextlost', handleLost)
+    return () => canvas.removeEventListener('webglcontextlost', handleLost)
+  }, [gl, onContextLost])
+  return null
+}
+
 interface HeroSceneProps {
   reducedMotion: boolean
   active?: boolean
+  onContextLost?: () => void
 }
 
-export default function HeroScene({ reducedMotion, active = true }: HeroSceneProps) {
+export default function HeroScene({ reducedMotion, active = true, onContextLost }: HeroSceneProps) {
   const particleCount = useMemo(() => {
     const cores = typeof navigator !== 'undefined' ? navigator.hardwareConcurrency ?? 8 : 8
     const narrow = typeof window !== 'undefined' ? window.innerWidth < 768 : false
@@ -123,6 +142,7 @@ export default function HeroScene({ reducedMotion, active = true }: HeroScenePro
       frameloop={isStatic ? 'demand' : 'always'}
     >
       <StaticFrame reducedMotion={isStatic} />
+      <ContextGuard onContextLost={onContextLost} />
       <ambientLight intensity={0.28} />
       <pointLight position={[5, 3, 5]} intensity={18} color={ACCENT} />
       <pointLight position={[-4, -2, 3]} intensity={12} color={ACCENT_2} />
