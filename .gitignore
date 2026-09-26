@@ -4,4 +4,13 @@ dist-ssr
 *.local
 .DS_Store
 *.tsbuildinfo
+
+# Local scratch / tooling artefacts — not part of the site
 _archive/
+_artwork/
+artifacts/
+design-system/
+.extract-design-system/
+.freebuff/
+.vercel/
+text_*.json

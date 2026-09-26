@@ -6,6 +6,7 @@
   left: 0;
   right: 0;
   z-index: 100;
+  padding-top: env(safe-area-inset-top, 0);
   background: rgba(10, 10, 15, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -35,6 +36,34 @@
   justify-content: space-between;
   gap: var(--space-3);
   height: 68px;
+}
+
+.sectionProgress {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.sectionProgressLabel { white-space: nowrap; }
+
+.sectionProgressTrack {
+  display: block;
+  width: 56px;
+  height: 2px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.sectionProgressFill {
+  display: block;
+  width: var(--section-progress);
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.35s ease;
 }
 
 /* Monogram */
@@ -188,6 +217,11 @@
     display: flex;
   }
 
+  .sectionProgress {
+    display: flex;
+    margin-left: 0;
+  }
+
   .panel {
     display: block;
     position: absolute;
@@ -208,10 +242,22 @@
       visibility 0.25s ease;
   }
 
+  .panelLinks {
+    padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom, 0));
+  }
+
   .panel.open {
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
     pointer-events: auto;
   }
+}
+
+@media (min-width: 768px) {
+  .sectionProgress { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionProgressFill { transition: none; }
 }

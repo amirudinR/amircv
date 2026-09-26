@@ -4,6 +4,15 @@
   gap: var(--space-6);
 }
 
+.filters { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-3); }
+.filters button { min-height: 44px; padding: 8px 16px; border: 1px solid var(--border); border-radius: calc(var(--radius) / 2); background: transparent; color: var(--text-muted); cursor: pointer; font-size: var(--text-sm); }
+.filters button:hover { color: var(--text); border-color: var(--text-muted); }
+.filters button[aria-pressed='true'] { color: var(--bg); background: var(--text); border-color: var(--text); }
+.filters button[aria-pressed='true']:hover { color: var(--bg); background: var(--text); border-color: var(--text); }
+.filters button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+.selectionHelp { min-height: 1.65em; margin: 0 0 var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
+.card[hidden] { display: none; }
+
 .card {
   position: relative;
   overflow: hidden;
@@ -61,7 +70,81 @@
 }
 
 .badges {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badges::before {
+  content: '';
+  position: absolute;
+  top: var(--space-1);
+  bottom: var(--space-1);
+  left: 4px;
+  width: 1px;
+  background: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.skillItem {
+  display: inline-flex;
+}
+
+.skill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--radius) / 2);
+  background: transparent;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.skill::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  width: 8px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.skill > span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.skillRelated > span {
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+  color: var(--text);
+}
+
+.skillSelected > span {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.skill:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card::before, .skill > span { transition: none !important; }
+  .card:hover { transform: none; }
+}
+
+@media (max-width: 767px) {
+  .card { padding: var(--space-4); }
+  .badges { gap: var(--space-1); }
 }

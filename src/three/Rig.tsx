@@ -11,8 +11,8 @@ const target = new THREE.Vector3()
 export function Rig({ reducedMotion }: RigProps) {
   useFrame((state) => {
     if (reducedMotion) return
-    target.set(state.pointer.x * 0.6, state.pointer.y * 0.6, state.camera.position.z)
-    state.camera.position.lerp(target, 0.05)
+    target.set(state.pointer.x * 0.32, state.pointer.y * 0.22, state.camera.position.z)
+    state.camera.position.lerp(target, 0.035)
     state.camera.lookAt(0, 0, 0)
   })
   return null

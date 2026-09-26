@@ -20,7 +20,7 @@
   --accent: #4D7CFE;
   --accent-2: #A78BFA;
   --text: #F2F2F5;
-  --text-muted: #8A8A98;
+  --text-muted: #A1A1AF;
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
@@ -58,6 +58,10 @@
 /* Base */
 html {
   scroll-behavior: smooth;
+  /* Keep section titles clear of the fixed nav when anchors are followed */
+  scroll-padding-top: 88px;
+  /* Belt-and-suspenders against decorative layers widening the page */
+  overflow-x: clip;
 }
 
 body {
@@ -71,6 +75,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100vh;
+  /* Kill the iOS tap flash on interactive elements */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -88,6 +96,13 @@ img, picture, video, canvas, svg {
 input, button, textarea, select {
   font: inherit;
   color: inherit;
+}
+
+/* Remove the 300ms tap delay on touch devices and allow instant taps */
+a,
+button,
+[role='button'] {
+  touch-action: manipulation;
 }
 
 p {
@@ -239,5 +254,12 @@ body::after {
 
   .eyebrow {
     letter-spacing: 0.13em;
+  }
+
+  /* Prevent iOS from zooming the page when a form field is focused */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
   }
 }

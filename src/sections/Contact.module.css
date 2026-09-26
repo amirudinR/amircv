@@ -1,28 +1,27 @@
 .contact {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
-.glow {
+.ambient {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
   pointer-events: none;
-}
-
-.glow::before {
-  content: '';
-  width: min(720px, 90vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent) 14%, transparent) 0%,
-    color-mix(in srgb, var(--accent-2) 7%, transparent) 40%,
-    transparent 70%
-  );
-  filter: blur(20px);
+  z-index: 0;
+  background:
+    radial-gradient(
+      120% 62% at 50% 108%,
+      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      70% 44% at 78% 0%,
+      color-mix(in srgb, var(--accent-2) 7%, transparent) 0%,
+      transparent 70%
+    );
+  transform: translate3d(0, 0, 0);
+  animation: ambientDrift 20s ease-in-out infinite alternate;
 }
 
 .inner {
@@ -34,6 +33,23 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-6);
+  z-index: 1;
+}
+
+@keyframes ambientDrift {
+  from {
+    transform: translate3d(-1%, 0.5%, 0);
+    opacity: 0.75;
+  }
+  to {
+    transform: translate3d(1%, -0.5%, 0);
+    opacity: 1;
+  }
+}
+
+/* Shader-inspired CSS field: transforms and opacity only animate. */
+.reducedMotion .ambient {
+  animation: none;
 }
 
 .statement {
@@ -44,6 +60,14 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--text);
+}
+
+/* Keep content styling below ambient layer. */
+.ambient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 12%, transparent) 100%);
 }
 
 .accentWord {
@@ -73,6 +97,10 @@
 
 .mailButton {
   display: inline-block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  min-height: 44px;
   padding: var(--space-3) var(--space-6);
   font-family: var(--font-mono);
   font-size: var(--text-base);
@@ -102,6 +130,7 @@
 }
 
 .copyButton {
+  min-height: 44px;
   padding: var(--space-3) var(--space-5);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -126,16 +155,12 @@
   outline-offset: 3px;
 }
 
-.srStatus {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+.copyStatus {
+  flex-basis: 100%;
+  min-height: 1.25em;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
 }
 
 .socials {
@@ -151,6 +176,10 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
   text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding-block: 10px;
   transition: color 0.25s ease;
 }
 
@@ -170,6 +199,10 @@
   color: var(--text-muted);
   text-decoration: none;
   padding-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 10px;
   transition: color 0.25s ease;
 }
 
@@ -200,11 +233,28 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ambient {
+    animation: none;
+  }
+
   .mailButton,
   .copyButton,
   .socialLink,
   .resumeLink,
   .resumeLink::after {
     transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .emailRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mailButton,
+  .copyButton {
+    width: 100%;
+    text-align: center;
   }
 }

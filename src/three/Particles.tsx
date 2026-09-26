@@ -26,13 +26,13 @@ export function Particles({ count, reducedMotion }: ParticlesProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null)
   const groupRef = useRef<THREE.Group>(null)
 
-  // Scatter points in a spherical shell (radius 3–8)
+  // Scatter restrained points in a spherical shell (radius 3.2–6.5)
   const transforms = useMemo(() => {
     const rand = mulberry32(1337)
     const dummy = new THREE.Object3D()
     const list: THREE.Matrix4[] = []
     for (let i = 0; i < count; i++) {
-      const radius = 3 + rand() * 5
+      const radius = 3.2 + rand() * 3.3
       const theta = rand() * Math.PI * 2
       const phi = Math.acos(2 * rand() - 1)
       dummy.position.set(
@@ -41,7 +41,7 @@ export function Particles({ count, reducedMotion }: ParticlesProps) {
         radius * Math.cos(phi),
       )
       dummy.rotation.set(rand() * Math.PI, rand() * Math.PI, rand() * Math.PI)
-      const s = 0.6 + rand() * 1.1
+      const s = 0.45 + rand() * 0.55
       dummy.scale.setScalar(s)
       dummy.updateMatrix()
       list.push(dummy.matrix.clone())
@@ -66,20 +66,16 @@ export function Particles({ count, reducedMotion }: ParticlesProps) {
     if (reducedMotion || !groupRef.current) return
     const t = state.clock.elapsedTime
     // Slow group spin + subtle drift
-    groupRef.current.rotation.y += delta * 0.04
-    groupRef.current.rotation.x = Math.sin(t * 0.15) * 0.08
-    groupRef.current.position.y = Math.sin(t * 0.3) * 0.12
+    groupRef.current.rotation.y += delta * 0.022
+    groupRef.current.rotation.x = Math.sin(t * 0.12) * 0.045
+    groupRef.current.position.y = Math.sin(t * 0.22) * 0.06
   })
 
   return (
     <group ref={groupRef}>
-      <instancedMesh
-        ref={meshRef}
-        args={[undefined, undefined, count]}
-        frustumCulled={false}
-      >
-        <tetrahedronGeometry args={[0.05]} />
-        <meshStandardMaterial roughness={0.35} metalness={0.6} />
+      <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+        <tetrahedronGeometry args={[0.035]} />
+        <meshBasicMaterial transparent opacity={0.62} />
       </instancedMesh>
     </group>
   )

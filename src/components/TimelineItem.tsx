@@ -15,16 +15,15 @@ export function TimelineItem({ item, index }: TimelineItemProps) {
       className={`${styles.card} reveal`}
       style={{ transitionDelay: `${Math.min(index * 80, 400)}ms` }}
     >
-      <span className={styles.index} aria-hidden="true">
-        {String(index + 1).padStart(2, '0')}
-      </span>
       <div className={styles.topRow}>
         <h3 className={styles.role}>{item.role}</h3>
         <span className={styles.period}>{period}</span>
       </div>
 
       <p className={styles.meta}>
-        {item.company} · {item.location}
+        <strong>{item.company}</strong>
+        <span>{item.location}</span>
+        {item.end === null && <span className={styles.current}>Current role</span>}
       </p>
 
       <p className={styles.summary}>{item.summary}</p>

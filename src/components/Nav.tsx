@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import styles from './Nav.module.css';
 
@@ -62,6 +62,16 @@ export function Nav({ links }: NavProps) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isOpen]);
 
+  // Close the mobile menu when the layout returns to the desktop breakpoint
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 768px)');
+    const onChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsOpen(false);
+    };
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
   const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
     document.getElementById(id)?.scrollIntoView({
@@ -69,6 +79,10 @@ export function Nav({ links }: NavProps) {
     });
     setActiveId(id);
     setIsOpen(false);
+    // Keep focus out of the panel that just became hidden
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      toggleRef.current?.focus();
+    }
   };
 
   const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -80,6 +94,9 @@ export function Nav({ links }: NavProps) {
   const navClass = [styles.nav, isScrolled ? styles.scrolled : '']
     .filter(Boolean)
     .join(' ');
+  const activeIndex = Math.max(0, links.findIndex((link) => link.id === activeId));
+  const sectionProgress = links.length > 1 ? (activeIndex / (links.length - 1)) * 100 : 100;
+  const progressStyle = { '--section-progress': `${sectionProgress}%` } as CSSProperties;
   const panelClass = [styles.panel, isOpen ? styles.open : '']
     .filter(Boolean)
     .join(' ');
@@ -124,9 +141,17 @@ export function Nav({ links }: NavProps) {
           <span className={styles.toggleBar} />
           <span className={styles.toggleBar} />
         </button>
+        <span className={styles.sectionProgress} style={progressStyle} aria-hidden="true">
+          <span className={styles.sectionProgressLabel}>
+            {String(activeIndex + 1).padStart(2, '0')} / {String(links.length).padStart(2, '0')}
+          </span>
+          <span className={styles.sectionProgressTrack}>
+            <span className={styles.sectionProgressFill} />
+          </span>
+        </span>
       </nav>
 
-      <div id={menuId} className={panelClass}>
+      <div id={menuId} className={panelClass} aria-hidden={!isOpen}>
         <ul className={styles.panelLinks}>
           {links.map((link) => {
             const isActive = link.id === activeId;
@@ -136,6 +161,7 @@ export function Nav({ links }: NavProps) {
                   href={`#${link.id}`}
                   className={`${styles.panelLink} ${isActive ? styles.active : ''}`}
                   aria-current={isActive ? 'location' : undefined}
+                  tabIndex={isOpen ? undefined : -1}
                   onClick={(event) => handleLinkClick(event, link.id)}
                 >
                   {link.label}

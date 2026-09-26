@@ -1,19 +1,11 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { Profile, Social } from '@/data/types';
 import { gsap } from '@/lib/gsap';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { useMagnetic } from '@/hooks/useMagnetic';
-import { RotatingText } from '@/components/RotatingText';
 import styles from './Hero.module.css';
 
 const HeroScene = lazy(() => import('@/three/HeroScene'));
-
-const ROLE_ROTATION = [
-  'Mobile & Web Engineer',
-  'React Native & Kotlin Developer',
-  'Offline-First Architect',
-  'AI Automation Builder',
-];
 
 const PROOF_POINTS = [
   { value: '4+', label: 'Published apps' },
@@ -21,6 +13,37 @@ const PROOF_POINTS = [
   { value: 'Offline-first', label: 'Core specialty' },
   { value: 'Worldwide', label: 'Open to relocation' },
 ];
+
+const ARCHITECTURE_NODES = [
+  {
+    id: 'local',
+    label: 'LOCAL',
+    title: 'Local-first foundation',
+    detail: 'Interfaces stay useful close to the user, with clear boundaries for offline work and device state.',
+    position: 'nodeLocal',
+  },
+  {
+    id: 'sync',
+    label: 'SYNC',
+    title: 'Resilient sync layer',
+    detail: 'Changes are shaped for reliable handoff between local state and connected services.',
+    position: 'nodeSync',
+  },
+  {
+    id: 'cloud',
+    label: 'CLOUD',
+    title: 'Connected services',
+    detail: 'Cloud capabilities extend the product without hiding the experience behind infrastructure.',
+    position: 'nodeCloud',
+  },
+  {
+    id: 'ai',
+    label: 'AI',
+    title: 'Useful intelligence',
+    detail: 'AI appears where it removes friction, with human-readable states and deliberate fallbacks.',
+    position: 'nodeAi',
+  },
+] as const;
 
 interface HeroProps {
   profile: Profile;
@@ -34,15 +57,26 @@ export function Hero({ profile, socials }: HeroProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const primaryCtaRef = useMagnetic<HTMLAnchorElement>();
   const secondaryCtaRef = useMagnetic<HTMLAnchorElement>();
+  const [activeNodeId, setActiveNodeId] = useState<(typeof ARCHITECTURE_NODES)[number]['id']>('local');
+  const [isSceneActive, setIsSceneActive] = useState(true);
+
+  // Pause the WebGL loop whenever the hero leaves the viewport.
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSceneActive(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   // Split name so the last word carries the gradient accent.
   const nameParts = profile.name.trim().split(/\s+/);
   const lastWord = nameParts.pop() ?? profile.name;
   const firstWords = nameParts.join(' ');
-
-  // Accent the leading keyword of the role line.
-  const roleParts = profile.role.trim().split(/\s+/);
-  const roleKeyword = roleParts.shift() ?? '';
+  const activeNode = ARCHITECTURE_NODES.find((node) => node.id === activeNodeId) ?? ARCHITECTURE_NODES[0];
 
   // Entrance sequence: eyebrow → name → role → tagline → CTAs → socials.
   useEffect(() => {
@@ -117,23 +151,12 @@ export function Hero({ profile, socials }: HeroProps) {
           <span />
           <span />
         </div>
-        <div className={styles.engineeringSignal} aria-hidden="true">
-          <span className={styles.signalLabel}>ENGINEERING SIGNAL / LIVE</span>
-          <div className={`${styles.signalNode} ${styles.nodeLocal}`}>LOCAL DB</div>
-          <div className={`${styles.signalNode} ${styles.nodeQueue}`}>SYNC QUEUE</div>
-          <div className={`${styles.signalNode} ${styles.nodeCloud}`}>CLOUD</div>
-          <div className={`${styles.signalNode} ${styles.nodeInvoice}`}>INVOICE</div>
-          <span className={`${styles.signalPath} ${styles.pathOne}`} />
-          <span className={`${styles.signalPath} ${styles.pathTwo}`} />
-          <span className={`${styles.signalPath} ${styles.pathThree}`} />
-          <span className={styles.signalPulse} />
-        </div>
-        <div className={styles.canvas} aria-hidden="true">
-          <Suspense fallback={null}>
-            <HeroScene reducedMotion={reducedMotion} />
-          </Suspense>
-        </div>
-      </div>
+         <div className={styles.canvas} aria-hidden="true">
+           <Suspense fallback={null}>
+             <HeroScene reducedMotion={reducedMotion} active={isSceneActive} />
+           </Suspense>
+         </div>
+       </div>
 
       <div ref={contentRef} className={`container ${styles.content}`}>
         <p className={`eyebrow ${styles.eyebrowRow}`} data-animate>
@@ -147,8 +170,7 @@ export function Hero({ profile, socials }: HeroProps) {
         </h1>
 
         <p className={styles.role} data-animate>
-          <span className={styles.roleKeyword}>{roleKeyword}</span>{' '}
-          <RotatingText items={ROLE_ROTATION} />
+          {profile.role}
         </p>
 
         <p className={styles.tagline} data-animate>
@@ -193,6 +215,35 @@ export function Hero({ profile, socials }: HeroProps) {
             </div>
           ))}
         </dl>
+      </div>
+
+      <div
+        className={styles.architecture}
+        role="group"
+        aria-label="Illustrative product architecture"
+      >
+        <div className={styles.architectureLine} aria-hidden="true" />
+        <p className={styles.architectureLabel}>Illustrative architecture</p>
+        <div className={styles.nodeMap} role="group" aria-label="Architecture layers">
+          {ARCHITECTURE_NODES.map((node) => (
+            <button
+              key={node.id}
+              type="button"
+              className={`${styles.architectureNode} ${styles[node.position]} ${node.id === activeNodeId ? styles.nodeActive : ''}`}
+              aria-pressed={node.id === activeNodeId}
+              aria-controls="hero-architecture-detail"
+              onClick={() => setActiveNodeId(node.id)}
+            >
+              <span className={styles.nodeDot} aria-hidden="true" />
+              <span>{node.label}</span>
+            </button>
+          ))}
+        </div>
+        <div id="hero-architecture-detail" className={styles.detailPanel} aria-live="polite">
+          <span className="eyebrow">{activeNode.label}</span>
+          <strong>{activeNode.title}</strong>
+          <p>{activeNode.detail}</p>
+        </div>
       </div>
 
       <div className={styles.scrollIndicator} aria-hidden="true">

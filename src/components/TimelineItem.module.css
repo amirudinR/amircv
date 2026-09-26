@@ -22,7 +22,7 @@
 }
 
 .card:hover::before,
-.card.is-visible::before {
+.card:global(.is-visible)::before {
   transform: scaleY(1);
 }
 
@@ -58,15 +58,23 @@
 .period {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--accent);
+  color: var(--accent-2);
   white-space: nowrap;
 }
 
 .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
   margin-top: var(--space-1);
   color: var(--text-muted);
   font-size: var(--text-sm);
 }
+
+.meta strong { color: var(--text); font-weight: 500; }
+.current { color: var(--accent-2); border-left: 1px solid var(--border); padding-left: var(--space-2); }
+.summary, .achievements { max-width: 65ch; }
 
 .summary {
   margin-top: var(--space-3);
@@ -115,4 +123,5 @@
   .card:hover {
     transform: none;
   }
+  .card, .card::before { transition: none; }
 }

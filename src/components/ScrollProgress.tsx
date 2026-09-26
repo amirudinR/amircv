@@ -12,8 +12,13 @@ export function ScrollProgress() {
     if (!bar) return;
 
     if (reducedMotion) {
-      gsap.set(bar, { scaleX: 1 });
-      return;
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        gsap.set(bar, { scaleX: max > 0 ? window.scrollY / max : 0 });
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      return () => window.removeEventListener('scroll', update);
     }
 
     const tween = gsap.fromTo(

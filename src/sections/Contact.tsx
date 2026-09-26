@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Profile, Social } from '@/data/types';
 import { Section } from '@/components/Section';
 import { useMagnetic } from '@/hooks/useMagnetic';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import styles from './Contact.module.css';
 
 interface ContactProps {
@@ -22,10 +23,12 @@ async function copyEmail(email: string): Promise<boolean> {
       textarea.style.position = 'absolute';
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
-      textarea.select();
-      const ok = document.execCommand('copy');
-      document.body.removeChild(textarea);
-      return ok;
+      try {
+        textarea.select();
+        return document.execCommand('copy');
+      } finally {
+        textarea.remove();
+      }
     } catch {
       return false;
     }
@@ -34,8 +37,12 @@ async function copyEmail(email: string): Promise<boolean> {
 
 export function Contact({ profile, socials }: ContactProps) {
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const requestRef = useRef(0);
   const mailRef = useMagnetic<HTMLAnchorElement>(0.3);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     return () => {
@@ -46,18 +53,32 @@ export function Contact({ profile, socials }: ContactProps) {
   }, []);
 
   const handleCopy = async () => {
+    if (isPending) return;
+    const requestId = requestRef.current + 1;
+    requestRef.current = requestId;
+    setIsPending(true);
     const ok = await copyEmail(profile.email);
-    if (!ok) return;
-    setCopied(true);
+    if (requestRef.current !== requestId) return;
+    setIsPending(false);
+    setCopied(ok);
+    setCopyError(!ok);
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
     }
-    timeoutRef.current = window.setTimeout(() => setCopied(false), 2000);
+    timeoutRef.current = window.setTimeout(() => {
+      setCopied(false);
+      setCopyError(false);
+    }, 3000);
   };
 
   return (
-    <Section id="contact" eyebrow="06 — Contact" title="Let's build something" className={styles.contact}>
-      <div className={styles.glow} aria-hidden="true" />
+    <Section
+      id="contact"
+      eyebrow="06 — Contact"
+      title="Let's build something"
+      className={`${styles.contact} ${reducedMotion ? styles.reducedMotion : ''}`}
+    >
+      <div className={styles.ambient} aria-hidden="true" />
       <div className={styles.inner}>
         <p className={`reveal ${styles.statement}`}>
           Have a <span className={styles.accentWord}>project</span> in mind?
@@ -72,11 +93,21 @@ export function Contact({ profile, socials }: ContactProps) {
           <a ref={mailRef} href={`mailto:${profile.email}`} className={styles.mailButton}>
             {profile.email}
           </a>
-          <button type="button" className={styles.copyButton} onClick={handleCopy}>
-            {copied ? 'Copied ✓' : 'Copy'}
+          <button
+            type="button"
+            className={styles.copyButton}
+            onClick={handleCopy}
+            disabled={isPending}
+            aria-describedby="contact-copy-status"
+          >
+            {isPending ? 'Copying' : copied ? 'Copied' : copyError ? 'Retry copy' : 'Copy'}
           </button>
-          <span className={styles.srStatus} aria-live="polite">
-            {copied ? 'Email address copied to clipboard' : ''}
+          <span id="contact-copy-status" className={styles.copyStatus} aria-live="polite">
+            {copied
+              ? 'Email address copied to clipboard.'
+              : copyError
+                ? 'Copy failed. Long-press the email address to copy it manually.'
+                : ''}
           </span>
         </div>
 

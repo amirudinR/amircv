@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties, MouseEvent } from 'react';
 import type { Project } from '@/data/types';
 import { Badge } from '@/components/Badge';
@@ -6,7 +6,7 @@ import { PhoneMockup } from '@/components/PhoneMockup';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import styles from './ProjectCard.module.css';
 
-const MAX_TILT = 4;
+const MAX_TILT = 2;
 
 interface ProjectCardProps {
   project: Project;
@@ -15,11 +15,23 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const reducedMotion = usePrefersReducedMotion();
   const ref = useRef<HTMLElement>(null);
-  const [tilt, setTilt] = useState<{ rx: number; ry: number } | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ rx: number; ry: number } | null>(null);
   const isTouch = useMemo(
     () => window.matchMedia('(hover: none), (pointer: coarse)').matches,
     [],
   );
+
+  // Tilt is written to CSS variables so pointer movement never re-renders the
+  // card subtree (which contains the interactive phone demo).
+  const applyTilt = useCallback(() => {
+    frameRef.current = null;
+    const node = ref.current;
+    const pending = pendingRef.current;
+    if (!node || !pending) return;
+    node.style.setProperty('--tilt-x', `${pending.rx.toFixed(2)}deg`);
+    node.style.setProperty('--tilt-y', `${pending.ry.toFixed(2)}deg`);
+  }, []);
 
   const handleMouseMove = useCallback(
     (event: MouseEvent<HTMLElement>) => {
@@ -27,18 +39,34 @@ export function ProjectCard({ project }: ProjectCardProps) {
       const rect = ref.current.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width - 0.5;
       const py = (event.clientY - rect.top) / rect.height - 0.5;
-      setTilt({ rx: -py * 2 * MAX_TILT, ry: px * 2 * MAX_TILT });
+      pendingRef.current = { rx: -py * 2 * MAX_TILT, ry: px * 2 * MAX_TILT };
+      frameRef.current ??= window.requestAnimationFrame(applyTilt);
     },
-    [reducedMotion, isTouch],
+    [reducedMotion, isTouch, applyTilt],
   );
 
-  const handleMouseLeave = useCallback(() => setTilt(null), []);
+  const handleMouseLeave = useCallback(() => {
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
+    }
+    pendingRef.current = null;
+    const node = ref.current;
+    node?.style.setProperty('--tilt-x', '0deg');
+    node?.style.setProperty('--tilt-y', '0deg');
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+    },
+    [],
+  );
 
   const style: CSSProperties = {
-    transform: tilt
-      ? `perspective(900px) rotateX(${tilt.rx.toFixed(2)}deg) rotateY(${tilt.ry.toFixed(2)}deg)`
-      : 'perspective(900px) rotateX(0deg) rotateY(0deg)',
-  };
+    '--tilt-x': '0deg',
+    '--tilt-y': '0deg',
+  } as CSSProperties;
 
   return (
     <article
@@ -55,28 +83,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <span className={styles.year}>{project.year}</span>
       </div>
 
-      {project.mockupType && (
-        <div className={styles.demo}>
-          <PhoneMockup
-            type={project.mockupType}
-            size={project.featured ? 'md' : 'sm'}
-          />
-        </div>
-      )}
-
       <p className={styles.summary}>{project.summary}</p>
 
-      {project.featured && project.challenge && project.engineering && (
-        <dl className={styles.caseStudy}>
-          <div>
-            <dt>Challenge</dt>
-            <dd>{project.challenge}</dd>
-          </div>
-          <div>
-            <dt>Engineering</dt>
-            <dd>{project.engineering}</dd>
-          </div>
-        </dl>
+      {project.featured && (project.challenge || project.engineering) && (
+        <details className={styles.caseDetails}>
+          <summary>Explore engineering decisions</summary>
+          <dl className={styles.caseStudy}>
+            {project.challenge && (
+              <div>
+                <dt>Challenge</dt>
+                <dd>{project.challenge}</dd>
+              </div>
+            )}
+            {project.engineering && (
+              <div>
+                <dt>Engineering</dt>
+                <dd>{project.engineering}</dd>
+              </div>
+            )}
+          </dl>
+        </details>
       )}
 
       {project.impact && project.impact.length > 0 && (
@@ -136,6 +162,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
               Code ↗
             </a>
           )}
+        </div>
+      )}
+
+      {project.mockupType && (
+        <div className={styles.demo}>
+          <PhoneMockup
+            type={project.mockupType}
+            size={project.featured ? 'md' : 'sm'}
+          />
         </div>
       )}
     </article>

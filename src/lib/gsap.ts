@@ -12,7 +12,9 @@ export { gsap, ScrollTrigger };
  * Returns a cleanup function.
  */
 export function initSmoothScroll(): () => void {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (reduceMotion || coarsePointer) {
     return () => {};
   }
 
