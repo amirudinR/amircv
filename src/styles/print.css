@@ -24,7 +24,14 @@
   /* ------------------------------------------------------------------------
      1. Paper palette + print type scale
      ------------------------------------------------------------------------ */
-  :root {
+  /* The selector is `[data-theme],` not just `:root` on purpose. A dark-mode
+     block in global.css matches `[data-theme='dark']`, which has the same
+     specificity as `:root` — so relying on file order to win would make the
+     printed sheet depend on which stylesheet happened to be imported last.
+     Naming both attributes pins print to the paper palette outright. */
+  :root,
+  [data-theme='light'],
+  [data-theme='dark'] {
     --bg: #ffffff;
     --bg-deep: #f7f4ec;
     --surface: #fbf8f1;

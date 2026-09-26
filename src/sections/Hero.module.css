@@ -122,6 +122,18 @@
   pointer-events: none;
 }
 
+/* Dark composite. `multiply` is a print operation: on a near-black ground it
+   drives the form to invisible, since a dark mark over near-black is still
+   near-black. `screen` inverts the relationship — the form's light values now
+   read as a lit mark on the desk, and the scene keeps the same palette
+   instead of needing a second set of tuned colours. Dropped a little further
+   because a screened mark carries more of its own brightness than a
+   multiplied one. */
+:global([data-theme='dark']) .canvas {
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+
 /* ---------------------------------------------------------------------------
    Type column
 --------------------------------------------------------------------------- */

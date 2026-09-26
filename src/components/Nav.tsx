@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
 import { scrollToTarget } from '@/lib/gsap';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './Nav.module.css';
 
 interface NavLink {
@@ -204,6 +205,8 @@ export function Nav({ links }: NavProps) {
             );
           })}
         </ul>
+
+        <ThemeToggle className={styles.themeToggle} />
 
         <button
           ref={toggleRef}

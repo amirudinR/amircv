@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light" />
+    <!-- `data-theme` below is the only thing that decides light vs dark, so the
+         UA is told both are supported and never guesses on its own. -->
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f4f0e6" />
     <title>Amirudin Ridwan — Senior Mobile & Web Engineer</title>
     <meta name="description" content="CV & portfolio of Amirudin Ridwan — Senior Mobile & Web Engineer specialising in React Native, Kotlin, and TypeScript. Offline-first POS systems, 10 published Android apps, open to relocation worldwide." />
@@ -78,6 +80,32 @@
       /* Paint the paper before React mounts, so there is no white flash. */
       html { background: #f4f0e6; }
     </style>
+
+    <script>
+      /* Resolve the theme before first paint.
+         This has to be inline and synchronous: an external or deferred script
+         runs after the browser has already painted the cream sheet, which is
+         exactly the flash this exists to prevent. Keep in step with
+         src/hooks/useTheme.ts — storage key, query string, and colours must
+         match, or the first render and the hydrated one disagree. */
+      (function () {
+        try {
+          var stored = localStorage.getItem('marginalia:theme');
+          var preference = stored === 'light' || stored === 'dark' ? stored : 'system';
+          var dark = preference === 'dark' ||
+            (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+          var root = document.documentElement;
+          root.dataset.theme = dark ? 'dark' : 'light';
+          /* Overrides the cream rule above, which cannot know the theme. */
+          root.style.backgroundColor = dark ? '#141210' : '#f4f0e6';
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute('content', dark ? '#141210' : '#f4f0e6');
+        } catch (error) {
+          /* Storage blocked: the light default already in the markup stands. */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

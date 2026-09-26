@@ -45,11 +45,19 @@
   height: 68px;
 }
 
+/* Controls sit hard right, in the order they read: theme, then the section
+   readout, then the menu. The auto margin lives on the theme toggle (the first
+   of that group) rather than on the readout, so inserting a control here does
+   not silently re-balance the bar. */
+.themeToggle {
+  margin-left: auto;
+}
+
 .sectionProgress {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-left: auto;
+  margin-left: var(--space-2);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-sm);

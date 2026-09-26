@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Midnight Signal — Reusable Animations
+   Reusable Animations
    ========================================================================== */
 
 @keyframes float {
@@ -13,10 +13,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(77, 124, 254, 0.4);
+    box-shadow: 0 0 0 0 var(--well-hover);
   }
   50% {
-    box-shadow: 0 0 20px 4px rgba(77, 124, 254, 0.2);
+    box-shadow: 0 0 20px 4px var(--well-hover);
   }
 }
 

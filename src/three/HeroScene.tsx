@@ -189,11 +189,19 @@ interface HeroSceneProps {
   reducedMotion: boolean
   active?: boolean
   onContextLost?: () => void
+  /**
+   * Current theme, so the palette is re-read when the page flips. Most of the
+   * scene reads the same in both themes — only `--scene-stain` changes — but
+   * re-reading is one `getComputedStyle` call per toggle, and hard-coding the
+   * assumption would make the next token added to the dark block silently
+   * wrong here.
+   */
+  theme?: 'light' | 'dark'
 }
 
-export default function HeroScene({ reducedMotion, active = true, onContextLost }: HeroSceneProps) {
-  // Once per mount, not per frame.
-  const palette = useMemo(readScenePalette, [])
+export default function HeroScene({ reducedMotion, active = true, onContextLost, theme = 'light' }: HeroSceneProps) {
+  // Once per theme, not per frame.
+  const palette = useMemo(readScenePalette, [theme])
 
   const particleCount = useMemo(() => {
     const cores = typeof navigator !== 'undefined' ? navigator.hardwareConcurrency ?? 8 : 8

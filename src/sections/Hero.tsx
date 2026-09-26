@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useSta
 import type { Profile, Social } from '@/data/types';
 import { gsap } from '@/lib/gsap';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useResolvedTheme } from '@/hooks/useTheme';
 import { useMagnetic } from '@/hooks/useMagnetic';
 import { SceneBoundary } from '@/components/SceneBoundary';
 import { AnimatedBeam, type AnimatedBeamNode } from '@/components/AnimatedBeam';
@@ -73,6 +74,9 @@ interface HeroProps {
 
 export function Hero({ profile, socials }: HeroProps) {
   const reducedMotion = usePrefersReducedMotion();
+  // Only the WebGL scene needs this; everything else re-themes through the
+  // tokens alone, so there is no class to add at the section root.
+  const theme = useResolvedTheme();
   const sectionRef = useRef<HTMLElement | null>(null);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -206,6 +210,7 @@ export function Hero({ profile, socials }: HeroProps) {
                   reducedMotion={reducedMotion}
                   active={isSceneActive}
                   onContextLost={() => setSceneEnabled(false)}
+                  theme={theme}
                 />
               </Suspense>
             </SceneBoundary>

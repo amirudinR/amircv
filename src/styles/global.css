@@ -35,6 +35,18 @@
   --border-strong: rgba(26, 24, 20, 0.3);
   --border-faint: rgba(26, 24, 20, 0.07);
 
+  /* Letterpress. Ink pressed into a sheet catches a highlight on its lower
+     edge, so the light comes from below. Tokenised because dark mode inverts
+     the direction the light appears to come from. */
+  --press-hi: rgba(255, 253, 248, 0.65);
+  --press-lo: rgba(74, 58, 40, 0.05);
+
+  /* Selection: a highlighter swipe, not a brand wash. The text on top stays
+     dark in both themes because the highlighter is light in both. */
+  --selection-ink: #1a1814;
+
+  --scrollbar-thumb: #cfc7b4;
+
   /* WebGL scene — read by the R3F components via getComputedStyle */
   --scene-ink: #2a2620;
   --scene-ink-soft: #6b6355;
@@ -87,6 +99,73 @@
      instead of dirtying it. */
   --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23f)' opacity='0.055'/%3E%3C/svg%3E");
   --paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23m)' opacity='0.05'/%3E%3C/svg%3E");
+
+  /* Recessed wells — a borderless surface that only darkens. Keeps the toggle
+     off the accent, so the accent never means two things at once. */
+  --well: rgba(26, 24, 20, 0.06);
+  --well-hover: rgba(26, 24, 20, 0.1);
+}
+
+/* ==========================================================================
+   Dark — "the press at night"
+
+   Not an inversion: this is the same desk under a lamp instead of daylight.
+   The sheet keeps its warmth, and the grain is re-baked as *light* noise
+   because dark grain on a near-black ground is invisible.
+
+   Only `[data-theme='dark']` writes dark values. There is deliberately no
+   `@media (prefers-color-scheme: dark)` block anywhere in this file — see
+   src/hooks/useTheme.ts for why the media query is resolved in JS instead.
+   ========================================================================== */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #141210;
+  --bg-deep: #0d0c0b;
+  --surface: #1c1a17;
+  --surface-2: #24211d;
+
+  /* Ink becomes the light source: warm off-white, never pure #fff, which
+     would read as a screen rather than paper. */
+  --ink: #f2ede3;
+  --ink-soft: #cdc5b6;
+  --text: #ece6da;
+  --text-muted: #a49a89;
+
+  /* Oxblood #8c2f24 is 2.4:1 on this ground — unusable as type. These are the
+     same hue carried up in lightness so the accent keeps its identity while
+     clearing 4.5:1. */
+  --accent: #d4785f;
+  --accent-2: #b8975c;
+  --accent-3: #8fb3cc;
+  --highlight: #f5e07a;
+
+  --border: rgba(242, 237, 227, 0.12);
+  --border-strong: rgba(242, 237, 227, 0.26);
+  --border-faint: rgba(242, 237, 227, 0.06);
+
+  --press-hi: rgba(0, 0, 0, 0.5);
+  --press-lo: rgba(242, 237, 227, 0.05);
+
+  --well: rgba(242, 237, 227, 0.07);
+  --well-hover: rgba(242, 237, 227, 0.12);
+
+  --scrollbar-thumb: #4a443c;
+
+  /* Shadows have to be black here: the warm ones from the light theme are
+     invisible against a ground that is already almost black. */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 20px 48px rgba(0, 0, 0, 0.55);
+
+  /* The scene is composited with `screen` instead of `multiply` under dark, so
+     it has to keep its light values to stay visible; only the stain is lifted,
+     because a dark red screens to almost nothing. See Hero.module.css. */
+  --scene-stain: #c2644a;
+
+  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23f)' opacity='0.05'/%3E%3C/svg%3E");
+  --paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23m)' opacity='0.045'/%3E%3C/svg%3E");
 }
 
 /* Base */
@@ -129,8 +208,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Letterpress: ink pressed into a sheet catches a highlight on its lower edge. */
 .press {
   text-shadow:
-    0 1px 0 rgba(255, 253, 248, 0.65),
-    0 -1px 0 rgba(74, 58, 40, 0.05);
+    0 1px 0 var(--press-hi),
+    0 -1px 0 var(--press-lo);
 }
 
 img, picture, video, canvas, svg {
@@ -156,7 +235,7 @@ p {
 /* Selection — a highlighter swipe, not a brand wash. */
 ::selection {
   background-color: var(--highlight);
-  color: var(--ink);
+  color: var(--selection-ink);
 }
 
 /* Scrollbar */
@@ -170,7 +249,7 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cfc7b4;
+  background: var(--scrollbar-thumb);
   border-radius: 8px;
   border: 2px solid var(--bg-deep);
 }

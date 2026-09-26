@@ -1,0 +1,67 @@
+/* Theme toggle — a small inked square in the header, sized to the hamburger it
+   sits beside so both read as the same row of controls. */
+
+.toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) / 2);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.toggle:hover {
+  color: var(--accent);
+  border-color: var(--border-strong);
+  background-color: var(--well);
+}
+
+/* The glyphs are stacked and cross-faded, so switching themes reads as the
+   mark turning over rather than two icons blinking past each other. */
+.icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+}
+
+.icon > svg {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  transition:
+    opacity 0.26s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Light page: offer the moon. */
+.toggle[data-theme-state='light'] .sun {
+  opacity: 0;
+  transform: rotate(50deg) scale(0.6);
+}
+
+.toggle[data-theme-state='light'] .moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Dark page: offer the sun. */
+.toggle[data-theme-state='dark'] .sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.toggle[data-theme-state='dark'] .moon {
+  opacity: 0;
+  transform: rotate(-50deg) scale(0.6);
+}
