@@ -1,0 +1,36 @@
+# Files the Vercel CLI must not upload.
+# .gitignore is NOT consulted by the CLI — only this file is.
+# Keep in sync with .gitignore.
+
+# Build output / install artefacts
+node_modules
+dist
+dist-ssr
+.vercel
+*.tsbuildinfo
+
+# VCS metadata
+.git
+
+# Local scratch / tooling artefacts (~64 MB, never part of the site)
+_archive
+_artwork
+.freebuff
+.deepeval
+artifacts
+design-system
+.extract-design-system
+text_*.json
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea
+.vscode
+*.swp
+*.swo
+*~
+*.log
+npm-debug.log*
+yarn-error.log*

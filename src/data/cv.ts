@@ -41,7 +41,7 @@ export const cv: CV = {
     stats: [
       { label: "Years in Tech", value: "4+" },
       { label: "Apps Published", value: "4+" },
-      { label: "Avg. App Rating", value: "4.6" },
+      { label: "Avg. App Rating", value: "4.3" },
       { label: "Hardware Downtime Cut", value: "40%" },
     ],
     currentFocus:
@@ -162,9 +162,14 @@ export const cv: CV = {
       id: "proj-2",
       title: "Equalizer Sound Utility",
       summary:
-        "System-grade multi-band audio customizer for Android with real-time low-latency DSP, monetized globally via AdMob — rated 4.6+ on Google Play.",
+        "System-grade multi-band audio customizer for Android with real-time low-latency DSP, monetized globally via AdMob — rated 4.3 on Google Play.",
       tech: ["Kotlin", "Android Audio SDK", "AdMob"],
-      liveUrl: "https://play.google.com/store/apps/dev?id=5627377990901054380",
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.equalizer",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.equalizer",
+      installs: "1K+",
+      rating: "4.3",
       repoUrl: "https://github.com/amirudinR/ikanequalizer",
       year: "2025",
       featured: true,
@@ -174,24 +179,28 @@ export const cv: CV = {
       engineering:
         "Built a native Kotlin audio pipeline around Android audio APIs with real-time band controls and a production AdMob monetization flow.",
       impact: [
-        "4.6+ rating on Google Play",
+        "4.3 stars from 24 Google Play reviews",
+        "1K+ installs on Google Play",
         "Real-time low-latency DSP rendering",
         "AdMob banner & interstitial monetization flow",
       ],
     },
     {
       id: "proj-3",
-      title: "MindLog AI Diary",
+      title: "Mindlog",
       summary:
-        "Voice-first journaling app with speech-to-text capture, offline logging, and seamless Firebase cross-device sync.",
-      tech: ["React Native", "Voice-to-Text", "Firebase"],
-      liveUrl: "https://play.google.com/store/apps/dev?id=5627377990901054380",
+        "Voice-first journaling app with speech-to-text capture, offline logging, biometric/PIN entry lock, and Firebase cross-device sync.",
+      tech: ["React Native", "Voice-to-Text", "Firebase", "Biometric Lock"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.mindlog",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.mindlog",
       year: "2025",
       featured: false,
       mockupType: "mindlog",
       impact: [
         "Voice-to-text with on-device capture",
-        "Automatic entry categorization with offline cache",
+        "Biometric and PIN lock for private entries",
         "Reliable cross-device Firebase sync",
       ],
     },
@@ -201,7 +210,10 @@ export const cv: CV = {
       summary:
         "Latency-free LED utility with a Morse code engine, strobing controls, and zero unnecessary background battery drain.",
       tech: ["Android SDK", "CameraManager API"],
-      liveUrl: "https://play.google.com/store/apps/dev?id=5627377990901054380",
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.flashlightpro",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.flashlightpro",
       year: "2025",
       featured: false,
       mockupType: "flashlight",
@@ -209,6 +221,132 @@ export const cv: CV = {
         "Near-zero hardware response latency",
         "Morse code strobe engine included",
         "Zero unnecessary background execution",
+      ],
+    },
+    {
+      id: "proj-7",
+      title: "Tumbas POS & Business",
+      summary:
+        "All-in-one POS and business management app covering cashier flows, warehouse stock, accounts receivable, and turnover reporting.",
+      tech: ["Kotlin", "SQLite", "Bluetooth Printing", "Barcode Scanner"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.tumbas",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.tumbas",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Adaptive cashier modes for retail, barbershop, and laundry",
+        "Stocktaking, repacking, and low-stock alerts",
+        "Daily and monthly turnover & profit-loss reports",
+      ],
+    },
+    {
+      id: "proj-8",
+      title: "Tracking Actifity",
+      summary:
+        "Habit and task tracker with mood logging, weekly and monthly progress charts, and scheduled reminders.",
+      tech: ["Kotlin", "Notifications", "Charts", "Dark Mode"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.trackingactifity",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.trackingactifity",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Daily habit, task, and mood logging in one flow",
+        "Weekly and monthly completion statistics",
+        "English and Indonesian localization",
+      ],
+    },
+    {
+      id: "proj-9",
+      title: "Status Saver - WA",
+      summary:
+        "WhatsApp status saver with a floating capture bubble that auto-files saved photos and videos into per-contact folders on-device.",
+      tech: ["Kotlin", "Accessibility API", "Media Storage"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.wasaver",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.wasaver",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Floating bubble capture straight from the status screen",
+        "Automatic per-contact folders via the Accessibility API",
+        "High-resolution image and HD video saving",
+      ],
+    },
+    {
+      id: "proj-10",
+      title: "Copy Clipboard",
+      summary:
+        "Offline clipboard history app that captures copied text in the background and makes it searchable, pinnable, and categorisable.",
+      tech: ["Kotlin", "ClipboardManager", "Room"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.copyclipboard",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.copyclipboard",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Background clipboard capture with no paste required",
+        "Real-time search across saved clips",
+        "Pinning and colour-coded categories, stored offline",
+      ],
+    },
+    {
+      id: "proj-11",
+      title: "The Last Fence",
+      summary:
+        "Endless wave-survival game with hero progression, weekly challenges, and a global leaderboard backed by cloud saves.",
+      tech: ["Kotlin", "Google Sign-In", "Cloud Save"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.thelastfence",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.porosdigital.thelastfence",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Wave difficulty scaling with endless runs",
+        "Hero unlocking and upgrades via earned crystals",
+        "Cloud save with offline guest-mode fallback",
+      ],
+    },
+    {
+      id: "proj-12",
+      title: "Memory Match",
+      summary:
+        "Card-matching brain-training game with escalating level sizes, star rewards, and a global leaderboard.",
+      tech: ["Kotlin", "Game Loop", "Local Persistence"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.memorymatch",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.memorymatch",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Progressive card counts across endless levels",
+        "Star-based scoring per cleared board",
+        "Global leaderboard for high-score comparison",
+      ],
+    },
+    {
+      id: "proj-13",
+      title: "Kotoba Pro",
+      summary:
+        "Offline Japanese vocabulary trainer with romaji, kana and kanji views, text-to-speech audio, and flashcard study sessions.",
+      tech: ["Kotlin", "Text-to-Speech", "Offline-First"],
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.kotobapro",
+      storeUrl:
+        "https://play.google.com/store/apps/details?id=com.amir.kotobapro",
+      year: "2026",
+      featured: false,
+      impact: [
+        "Hiragana, katakana, kanji, and romaji per entry",
+        "Spoken audio for pronunciation practice",
+        "Fully offline study mode",
       ],
     },
     {
@@ -244,4 +382,19 @@ export const cv: CV = {
       honors: "GPA 3.54/4.00 · Cum Laude",
     },
   ],
+  preferences: {
+    items: [
+      { label: "Current Location", value: "Blitar, East Java, Indonesia" },
+      { label: "Relocation", value: "Ready to relocate" },
+      { label: "Relocation Support", value: "Open to visa sponsorship" },
+      { label: "Work Mode", value: "Remote or hybrid" },
+      { label: "Timezone", value: "UTC+7 (WIB)" },
+      { label: "EU Overlap", value: "Flexible — full-day available" },
+      { label: "US Overlap", value: "Flexible — early morning or evening" },
+      { label: "Languages", value: "English (working) · Indonesian (native)" },
+      { label: "Notice Period", value: "30 days" },
+      { label: "Travel", value: "Open to business travel" },
+    ],
+    note: "Based in Blitar, East Java (UTC+7) with no restriction on working hours for EU or US teams — happy to start on a hybrid basis while settling. Everything I have shipped so far has been built and shipped remotely as an independent developer.",
+  },
 };

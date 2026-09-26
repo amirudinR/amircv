@@ -1,0 +1,70 @@
+/* Rubber-stamp impression. Edge tearing and uneven ink coverage come from the
+   SVG filter wired up in PaperStamp.tsx; everything else is plain CSS. */
+
+.stamp {
+  --stamp-tilt: -7deg;
+  --stamp-tilt-scale: 1;
+
+  display: inline-flex;
+  rotate: calc(var(--stamp-tilt) * var(--stamp-tilt-scale));
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.stamp[data-tone='muted'] {
+  color: var(--text-muted);
+}
+
+.inkDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.frame {
+  padding: 6px;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 0.5px color-mix(in srgb, currentColor 45%, transparent),
+    0 1px 0 color-mix(in srgb, var(--ink) 9%, transparent);
+}
+
+.rule {
+  display: block;
+  padding: 5px 14px 6px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.label {
+  display: block;
+  text-shadow: 0 0 0.5px color-mix(in srgb, currentColor 60%, transparent);
+}
+
+@media (max-width: 767px) {
+  .stamp {
+    --stamp-tilt-scale: 0.4;
+
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+  }
+
+  .frame {
+    padding: 4px;
+  }
+
+  .rule {
+    padding: 4px 9px 5px;
+  }
+}

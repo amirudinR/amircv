@@ -1,0 +1,640 @@
+/* ==========================================================================
+   PRINT — "Paper CV"
+   Ctrl+P on this site should hand a recruiter a tidy A4 document, not the
+   dark animated page.
+
+   Notes for maintainers:
+   - Every rule lives inside @media print (the @page rule included) so nothing
+     here can leak into screen rendering.
+   - Selectors are structural / ARIA / id based on purpose. Every visual class
+     in this project is a hashed CSS Module name, so hashed names are never
+     referenced. Hooks used: #home #about #skills #experience #projects
+     #education #contact, aria-hidden, aria-label, aria-live, [data-animate],
+     element types and #root > <element>.
+   - The palette is re-declared as tokens rather than per-component overrides,
+     so every CSS Module re-themes itself for paper from its own source.
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  /* ------------------------------------------------------------------------
+     1. Paper palette + print type scale
+     ------------------------------------------------------------------------ */
+  :root {
+    --bg: #ffffff;
+    --bg-deep: #f7f4ec;
+    --surface: #fbf8f1;
+    --border: rgba(26, 24, 20, 0.28);
+    --ink: #1a1814;
+    --ink-soft: #3a342b;
+    --text: #1a1814;
+    --text-muted: #6b6355;
+    --accent: #8c2f24;
+    /* Kept in the oxblood family: --accent-2 is used for the hero role line,
+       timeline periods and case-study labels, and must stay dark on paper. */
+    --accent-2: #6e2a20;
+
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+
+    --text-sm: 7.2pt;
+    --text-base: 9.2pt;
+    --text-h3: 10.4pt;
+    --text-h2: 13pt;
+    --text-h1: 18pt;
+    --text-hero: 26pt;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 14px;
+    --space-5: 18px;
+    --space-6: 20px;
+    --space-7: 24px;
+    --space-8: 28px;
+    --space-9: 32px;
+    --space-10: 36px;
+    --space-12: 44px;
+    --space-14: 52px;
+    --space-16: 60px;
+    --space-20: 72px;
+
+    --radius: 2mm;
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Page reset
+     ------------------------------------------------------------------------ */
+  html {
+    /* Step every rem-based module size down to paper scale. */
+    font-size: 13px;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    scroll-behavior: auto !important;
+  }
+
+  html,
+  body {
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body {
+    color: var(--ink);
+    font-size: var(--text-base);
+    line-height: 1.42;
+  }
+
+  /* Full-screen film-grain noise: position: fixed, inset: 0, z-index: 1000.
+     Fixed boxes repeat on every sheet, so it has to go. */
+  body::after {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     3. Nothing may print ghosted
+     ------------------------------------------------------------------------ */
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* GSAP writes inline opacity / transform / visibility (entrance stagger and
+     the scroll parallax that ends in autoAlpha: 0). Inline styles beat the
+     cascade, so these need !important to be undone. */
+  [data-animate],
+  #home > div,
+  #about > div > div {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     4. Hide the interactive / decorative chrome
+     ------------------------------------------------------------------------ */
+  /* Fixed glass nav, its mobile panel and the section-progress readout */
+  #root > header,
+  nav[aria-label='Primary'],
+  .skip-link,
+  /* ScrollProgress track, plus every aria-hidden decorative layer: hero
+     gradient, grid, aurora blobs, signal rings, WebGL canvas host, scroll cue,
+     contact ambient glow and the phone-demo chrome */
+  div[aria-hidden='true'],
+  canvas,
+  /* Hero status dot and architecture node dots */
+  #home span[aria-hidden='true'],
+  /* Hero architecture node map */
+  [aria-label='Illustrative product architecture'],
+  /* Timeline rail, scrubbed progress line and node dots */
+  #experience span[aria-hidden='true'],
+  /* Skills category filter row and its aria-live narration */
+  [aria-label='Filter skill categories'],
+  p[aria-live],
+  /* Project phone demos (four fake-app widgets) */
+  [aria-label^='Interactive demo:'],
+  input,
+  select,
+  textarea,
+  /* Contact copy-to-clipboard button and its live region */
+  button[aria-describedby],
+  #contact-copy-status,
+  /* Footer back-to-top button */
+  footer button,
+  /* Disclosure affordance; the case-study body is force-shown in §10 */
+  details > summary,
+  /* Hero CTAs are on-page navigation / a file download — not CV content */
+  #home a[href^='#'],
+  #home a[download] {
+    display: none !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     5. Shared rhythm, headings and the oxblood rule
+     ------------------------------------------------------------------------ */
+  .container {
+    max-width: none !important;
+    padding-inline: 0 !important;
+  }
+
+  main > section {
+    padding-block: 0 6mm !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Section header: eyebrow + <h2> + rule. Never orphaned at a page foot. */
+  main > section > div > header {
+    margin-bottom: 3.5mm !important;
+    gap: 1mm;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+  }
+
+  main > section > div > header > p {
+    font-size: 6.6pt;
+    letter-spacing: 0.16em;
+    color: var(--accent) !important;
+  }
+
+  main > section > div > header > h2 {
+    font-size: 12.5pt;
+    line-height: 1.15;
+  }
+
+  main > section > div > header > span[aria-hidden='true'] {
+    width: 20mm !important;
+    height: 0.5mm !important;
+    margin-top: 1.2mm !important;
+    background: var(--accent) !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     6. Hero — identity block, contact channels, proof strip
+     ------------------------------------------------------------------------ */
+  #home {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding-block: 0 5mm !important;
+    overflow: visible !important;
+    border-bottom: 0.4mm solid var(--border);
+  }
+
+  #home > div > p:first-of-type {
+    margin-bottom: 1mm !important;
+    font-size: 7pt;
+    color: var(--ink-soft) !important;
+  }
+
+  #home h1 {
+    max-width: none;
+    margin-bottom: 1.5mm;
+    font-size: 26pt;
+    line-height: 1.04;
+  }
+
+  /* The surname is a gradient-clipped, transparent-fill span on screen, which
+     would print as nothing at all. Give it a real colour instead. */
+  #home h1 > span {
+    display: inline;
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--accent) !important;
+  }
+
+  #home h1 + p {
+    max-width: none;
+    margin-bottom: 1.5mm;
+    font-size: 11pt;
+    color: var(--accent) !important;
+  }
+
+  #home h1 + p + p {
+    max-width: 66ch;
+    margin-bottom: 0;
+    font-size: 9.6pt;
+    color: var(--ink-soft) !important;
+  }
+
+  #home ul {
+    gap: 1mm 5mm;
+    margin: 2.5mm 0 0 !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  #home ul a {
+    font-size: 7.6pt;
+    color: var(--accent) !important;
+    text-decoration: none;
+  }
+
+  #home dl {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2mm 4mm;
+    max-width: none;
+    margin: 3mm 0 0;
+    padding-top: 2mm;
+    border-top: 0.3mm solid var(--border);
+  }
+
+  #home dl > div {
+    gap: 0.4mm;
+  }
+
+  #home dt {
+    font-size: 6.6pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted) !important;
+  }
+
+  #home dd {
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--ink) !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     7. About
+     ------------------------------------------------------------------------ */
+  #about > div > div {
+    gap: 3mm !important;
+  }
+
+  /* Stat values use the --text-h2 token; too loud for a stat tile. */
+  #about div > div > span:first-child {
+    font-size: 11pt !important;
+  }
+
+  #about aside {
+    padding: 2.5mm 3mm !important;
+    background: transparent !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     8. Skills — category cards and badges, no filter UI
+     ------------------------------------------------------------------------ */
+  #skills article,
+  #skills article[hidden] {
+    display: block !important;
+    padding: 2.5mm 3mm !important;
+    background: transparent !important;
+    border: 0.3mm solid var(--border) !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #skills article::before,
+  #skills ul::before,
+  #skills li button::before {
+    display: none !important;
+  }
+
+  #skills article > header {
+    margin-bottom: 1.5mm !important;
+  }
+
+  #skills ul {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  #skills li {
+    display: inline-block !important;
+    margin: 0 1.2mm 1.2mm 0 !important;
+  }
+
+  /* The chips are <button>s on screen; keep the label, drop the control. */
+  #skills li button {
+    display: inline !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    isolation: static;
+  }
+
+  /* ------------------------------------------------------------------------
+     9. Experience — two columns, no timeline chrome
+     ------------------------------------------------------------------------ */
+  #experience > div > div {
+    margin-top: 0 !important;
+  }
+
+  /* Grid rather than multicol: with only three roles, newspaper columns leave
+     a large hole beside the first entry. A 2-up grid keeps the empty cell in
+     the last row instead. */
+  #experience ol {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    column-gap: 6mm;
+    row-gap: 3.5mm;
+    margin: 0;
+    padding: 0 !important;
+    list-style: none;
+  }
+
+  #experience ol > li {
+    position: static;
+    margin: 0;
+    padding: 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #experience article {
+    display: block;
+    height: auto;
+    padding: 0 0 0 2.5mm !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-left: 0.5mm solid var(--accent) !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  #experience article::before {
+    display: none !important;
+  }
+
+  #experience ul {
+    gap: 0.8mm;
+    margin-top: 1.2mm;
+  }
+
+  #experience p {
+    margin-top: 1.2mm;
+  }
+
+  /* ------------------------------------------------------------------------
+     10. Projects — two columns
+     ------------------------------------------------------------------------ */
+  #projects > div > div:first-of-type {
+    display: block !important;
+    columns: 2;
+    column-gap: 6mm;
+    gap: 0;
+  }
+
+  #projects > div > div > div {
+    display: block !important;
+    grid-column: auto !important;
+    margin: 0 0 3.5mm;
+    padding: 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #projects article {
+    display: block !important;
+    height: auto !important;
+    padding: 2.2mm 2.6mm !important;
+    background: transparent !important;
+    border: 0.3mm solid var(--border) !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  /* The featured card is a two-column grid on screen (text | phone demo).
+     The demo is gone, so flatten it and restore the gaps by hand. */
+  #projects article > * + * {
+    margin-top: 1.2mm;
+  }
+
+  #projects article > header {
+    gap: 2mm;
+  }
+
+  #projects ul {
+    gap: 0.6mm;
+  }
+
+  #projects a {
+    min-height: 0;
+    font-size: 7.6pt;
+  }
+
+  #projects > div > div:last-of-type {
+    margin-top: 2mm !important;
+    text-align: left !important;
+  }
+
+  /* Collapsed <details>: the case study is the most valuable text on the card.
+     A closed <details> body is hidden by the UA sheet — `content-visibility:
+     hidden` on the body itself (Chrome / Edge / Firefox, and Chrome 131+ on
+     the ::details-content pseudo-element) or an ungenerated slot box
+     (WebKit). Author declarations outrank the UA sheet, so forcing
+     `content-visibility: visible` *and* `display: block` unwraps the body in
+     every engine. Belt-and-braces: main.tsx also flips `open` on beforeprint. */
+  details {
+    display: block;
+  }
+
+  details > *:not(summary) {
+    display: block !important;
+    content-visibility: visible !important;
+  }
+
+  details::details-content {
+    content-visibility: visible !important;
+  }
+
+  /* The label column is 92px wide on screen — far too wide for an 86mm
+     print column. */
+  details > dl > div {
+    display: block !important;
+    padding-top: 1mm !important;
+    border-top: 0.3mm solid var(--border) !important;
+  }
+
+  details dt {
+    font-size: 6.6pt;
+  }
+
+  details dd {
+    font-size: 7.6pt;
+    color: var(--ink-soft) !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     11. Education — editorial rules, not cards
+     ------------------------------------------------------------------------ */
+  #education > div > div {
+    display: block !important;
+  }
+
+  #education article {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-top: 0.3mm solid var(--border) !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #education article:first-of-type {
+    border-top: 0 !important;
+  }
+
+  #education article > div {
+    grid-template-columns: 1fr auto;
+    gap: 4mm;
+    margin: 0 !important;
+    padding: 1.6mm 0 !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     12. Contact — email, socials and the PDF link, left aligned
+     ------------------------------------------------------------------------ */
+  /* :not([aria-hidden]) matters: the ambient glow layer is also a
+     `#contact > div > div`, and this rule must not resurrect it. */
+  #contact > div > div:not([aria-hidden]) {
+    display: block !important;
+    max-width: none !important;
+    text-align: left !important;
+  }
+
+  #contact > div > div:not([aria-hidden]) > * {
+    margin: 0 0 2mm;
+  }
+
+  #contact > div > div:not([aria-hidden]) > div {
+    display: block !important;
+    text-align: left !important;
+  }
+
+  #contact > div > div:not([aria-hidden]) > nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1mm 5mm;
+  }
+
+  #contact a[href^='mailto:'] {
+    display: inline-block !important;
+    padding: 1.2mm 3mm !important;
+    font-size: 10.5pt !important;
+    color: var(--accent) !important;
+    background: none !important;
+    border: 0.4mm solid var(--accent) !important;
+    border-radius: 1mm !important;
+  }
+
+  /* The PDF link's underline is scaleX(0) until hover. */
+  #contact a[href$='.pdf']::after {
+    transform: scaleX(1) !important;
+  }
+
+  /* Same gradient-clipped transparent fill as the hero name. */
+  #contact p > span {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--accent) !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     13. Footer
+     ------------------------------------------------------------------------ */
+  footer {
+    padding-block: 3mm 0 !important;
+    border-top: 0.3mm solid var(--border);
+  }
+
+  footer > div {
+    display: block !important;
+    text-align: left !important;
+  }
+
+  footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1mm 4mm;
+  }
+
+  /* ------------------------------------------------------------------------
+     14. Flatten the chips
+     Badge level 2/3 and the education honours chip carry hard-coded blue
+     rgba() tints in their modules, which reads as a mistake next to oxblood.
+     Skill "level" is a screen affordance, so paper gets one flat chip style.
+     ------------------------------------------------------------------------ */
+  #skills li button > span,
+  #experience article > div > span,
+  #projects article > div > span {
+    color: var(--ink-soft) !important;
+    background: transparent !important;
+    border-color: var(--border) !important;
+    box-shadow: none !important;
+  }
+
+  #education article span {
+    color: var(--accent) !important;
+    border-color: var(--border) !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     15. Pagination contract
+     ------------------------------------------------------------------------ */
+  #projects article,
+  details,
+  #about aside,
+  #about > div > div > div:last-of-type > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

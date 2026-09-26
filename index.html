@@ -4,22 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f4f0e6" />
     <title>Amirudin Ridwan — Senior Mobile & Web Engineer</title>
-    <meta name="description" content="CV & portfolio of Amirudin Ridwan — Senior Mobile & Web Engineer specializing in React Native, Kotlin, and TypeScript. Offline-first POS systems, globally published apps, open to relocation worldwide." />
-    <link rel="canonical" href="https://github.com/amirudinR" />
+    <meta name="description" content="CV & portfolio of Amirudin Ridwan — Senior Mobile & Web Engineer specialising in React Native, Kotlin, and TypeScript. Offline-first POS systems, 10 published Android apps, open to relocation worldwide." />
+    <!-- Rewritten at build time from SITE_URL; see vite.config.ts -->
+    <link rel="canonical" href="https://amircv.vercel.app" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="Amirudin Ridwan — Senior Mobile & Web Engineer" />
-    <meta property="og:description" content="Senior Mobile & Web Engineer: React Native, Kotlin, TypeScript. Offline-first POS systems & globally published apps." />
-    <meta property="og:url" content="https://github.com/amirudinR" />
+    <meta property="og:description" content="Senior Mobile & Web Engineer: React Native, Kotlin, TypeScript. Offline-first POS systems and 10 published Android apps." />
+    <meta property="og:url" content="https://amircv.vercel.app" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Amirudin Ridwan — Senior Mobile & Web Engineer, printed on cream paper" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Fonts -->
+    <!-- Fonts: Fraunces is a variable face limited to 400-600 so heading
+         weights are capped at 600 in the stylesheet. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -42,18 +49,34 @@
           "https://github.com/amirudinR",
           "https://www.linkedin.com/in/amirudin-ridwan-725b901ba/",
           "https://www.instagram.com/am1red/",
-          "https://play.google.com/store/apps/dev?id=5627377990901054380"
+          "https://play.google.com/store/apps/details?id=com.porosdigital.equalizer",
+          "https://avataraang.vercel.app"
         ],
         "alumniOf": {
           "@type": "CollegeOrUniversity",
           "name": "STMIK Widya Cipta Dharma"
         },
-        "knowsAbout": ["React Native", "Kotlin", "TypeScript", "React", "Firebase", "Supabase", "Offline-First Architecture"]
+        "knowsAbout": [
+          "React Native",
+          "Kotlin",
+          "TypeScript",
+          "React",
+          "Offline-First Architecture",
+          "Firebase",
+          "Supabase",
+          "Android SDK"
+        ],
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "degree",
+          "name": "Bachelor's Degree (S.Kom) in Informatics Engineering"
+        }
       }
     </script>
 
     <style>
-      html { background: #0a0a0f; }
+      /* Paint the paper before React mounts, so there is no white flash. */
+      html { background: #f4f0e6; }
     </style>
   </head>
   <body>

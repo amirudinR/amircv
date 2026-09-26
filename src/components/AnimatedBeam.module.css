@@ -1,0 +1,284 @@
+/* Ink-on-paper flow diagram: hairline rules, dashed construction lines,
+   registration ticks. Nothing glows, nothing is saturated. */
+
+.root {
+  --beam-paper: var(--paper, var(--card, inherit));
+  --beam-card: var(--card, var(--paper, inherit));
+  --beam-ink: var(--ink, currentColor);
+  --beam-ink-soft: var(--ink-soft, currentColor);
+  --beam-muted: var(--muted, var(--text-muted, currentColor));
+  --beam-accent: var(--accent, currentColor);
+  --beam-sepia: var(--sepia, var(--accent-2, currentColor));
+  --beam-marker: var(--marker, var(--paper-deep, currentColor));
+  --beam-rule: var(--border);
+  --beam-shadow-card: 0 1px 2px color-mix(in srgb, var(--beam-ink) 8%, transparent);
+  --beam-shadow-lift: 0 6px 18px color-mix(in srgb, var(--beam-ink) 7%, transparent);
+
+  color: var(--beam-ink);
+  font-family: var(--font-body);
+}
+
+/* Drawing annotation above the sheet */
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--beam-ink);
+}
+
+.rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--beam-rule);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+/* The sheet of paper the diagram is drawn on */
+.sheet {
+  position: relative;
+  padding: var(--space-3) var(--space-2);
+  background: var(--beam-card);
+  border: 1px solid var(--beam-rule);
+  border-radius: calc(var(--radius) / 2);
+  box-shadow: var(--beam-shadow-card);
+  color: color-mix(in srgb, var(--beam-ink) 32%, transparent);
+}
+
+.cropTop,
+.cropBottom {
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+}
+
+.cropTop::before,
+.cropTop::after,
+.cropBottom::before,
+.cropBottom::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 0 solid currentColor;
+}
+
+.cropTop::before {
+  top: 0;
+  left: 0;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.cropTop::after {
+  top: 0;
+  right: 0;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.cropBottom::before {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.cropBottom::after {
+  right: 0;
+  bottom: 0;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.stage {
+  position: relative;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.wire,
+.construction,
+.wireMarker {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.construction {
+  stroke: color-mix(in srgb, var(--beam-sepia) 45%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+}
+
+.wire {
+  stroke: color-mix(in srgb, var(--beam-ink-soft) 70%, transparent);
+  stroke-width: 1.5;
+}
+
+.wireEmphasised {
+  stroke: var(--beam-accent);
+  stroke-width: 2;
+}
+
+.wireMarker {
+  stroke: var(--beam-marker);
+  stroke-width: 7;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.arrow {
+  fill: color-mix(in srgb, var(--beam-ink-soft) 70%, transparent);
+  stroke: none;
+}
+
+.arrowEmphasised {
+  fill: var(--beam-accent);
+}
+
+.terminalRing {
+  fill: none;
+  stroke: color-mix(in srgb, var(--beam-ink) 40%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.terminalDot {
+  fill: color-mix(in srgb, var(--beam-ink) 55%, transparent);
+}
+
+.terminalDotEmphasised {
+  fill: var(--beam-accent);
+}
+
+/* Travelling packet: a short tick with a fading tail, drawn around the local
+   origin so a single translate/rotate keyframe carries it along the wire. */
+.packet {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.packetHead {
+  fill: var(--beam-accent);
+}
+
+.packetTail {
+  fill: color-mix(in srgb, var(--beam-accent) 35%, transparent);
+}
+
+.nodes {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.nodeSlot {
+  display: flex;
+  min-width: 0;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 6px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--beam-ink);
+  background: var(--beam-card);
+  border: 1px solid var(--beam-rule);
+  border-radius: calc(var(--radius) / 4);
+  box-shadow: var(--beam-shadow-card);
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.node:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--beam-ink) 34%, transparent);
+  box-shadow: var(--beam-shadow-card), var(--beam-shadow-lift);
+}
+
+.node:focus-visible {
+  outline: 2px solid var(--beam-accent);
+  outline-offset: 3px;
+}
+
+.nodeActive {
+  color: var(--beam-accent);
+  border-color: var(--beam-accent);
+  box-shadow: var(--beam-shadow-card), inset 0 -3px 0 var(--beam-marker);
+}
+
+.nodeIndex {
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  color: var(--beam-muted);
+}
+
+.nodeActive .nodeIndex {
+  color: var(--beam-accent);
+}
+
+@media (max-width: 767px) {
+  .nodes {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node {
+    transition: none;
+  }
+
+  .node:hover {
+    transform: none;
+  }
+
+  .packet {
+    display: none;
+  }
+}

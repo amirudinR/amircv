@@ -1,0 +1,11 @@
+# robots.txt for the CV site.
+# NOTE: the origin below is a static fallback and MUST match the SITE_URL
+# environment variable set on the Vercel project
+# (Project -> Settings -> Environment Variables -> SITE_URL).
+# Vite rewrites canonical/og:url from SITE_URL at build time; this file is
+# copied verbatim from public/, so it is not templated.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://amircv.vercel.app/sitemap.xml

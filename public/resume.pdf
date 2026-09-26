@@ -4,7 +4,7 @@
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<< /Type /Pages /Kids [7 0 R 8 0 R 9 0 R] /Count 3 >>
+<< /Type /Pages /Kids [7 0 R 8 0 R 9 0 R 10 0 R] /Count 4 >>
 endobj
 3 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Times-Roman /Encoding /WinAnsiEncoding >>
@@ -19,15 +19,18 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
 endobj
 7 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R /F4 6 0 R >> >> /Contents 10 0 R >>
-endobj
-8 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R /F4 6 0 R >> >> /Contents 11 0 R >>
 endobj
-9 0 obj
+8 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R /F4 6 0 R >> >> /Contents 12 0 R >>
 endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R /F4 6 0 R >> >> /Contents 13 0 R >>
+endobj
 10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.276 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R /F4 6 0 R >> >> /Contents 14 0 R >>
+endobj
+11 0 obj
 << /Length 5933 >>
 stream
 52 783.29 491.276 2.6 re 0.549 0.184 0.141 rg f
@@ -42,7 +45,7 @@ BT /F1 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 617.362 Tm (Architecting off
 BT /F1 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 603.162 Tm (utility apps.) Tj ET
 BT /F1 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 581.962 Tm (Leading engineering at PT Poros Digital - scaling Poros POS & Inventory - while exploring AI automation and) Tj ET
 BT /F1 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 567.762 Tm (agentic workflows.) Tj ET
-BT /F4 8.6 Tf 0.3 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 548.038 Tm (4+ years in tech / 4+ apps published / 4.6 avg. app rating / 40% hardware downtime cut) Tj ET
+BT /F4 8.6 Tf 0.3 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 548.038 Tm (4+ years in tech / 4+ apps published / 4.3 avg. app rating / 40% hardware downtime cut) Tj ET
 BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 523.53 Tm (EXPERIENCE) Tj ET
 52 515.09 m 543.276 515.09 l 0.549 0.184 0.141 RG 0.8 w S
 BT /F2 11.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 494.742 Tm (Founder & Lead Mobile Engineer) Tj ET
@@ -82,11 +85,11 @@ BT /F1 9.6 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 110.75 Tm (-) Tj ET
 BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 110.75 Tm (Implemented streamlined systems maintenance procedures, slashing general hardware downtime by over 40%.) Tj ET
 BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 95.034 Tm (IT Infrastructure / Server Management / Network Administration / Hardware Diagnostics) Tj ET
 52 36 m 543.276 36 l 0.72 0.69 0.63 RG 0.4 w S
-BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 1 of 3) Tj ET
+BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 1 of 4) Tj ET
 endstream
 endobj
-11 0 obj
-<< /Length 6167 >>
+12 0 obj
+<< /Length 7150 >>
 stream
 BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 766.33 Tm (SELECTED PROJECTS) Tj ET
 52 757.89 m 543.276 757.89 l 0.549 0.184 0.141 RG 0.8 w S
@@ -104,95 +107,186 @@ BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 645.582 Tm (React Native / Kot
 BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 624.278 Tm (Equalizer Sound Utility) Tj ET
 BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 612.254 Tm (2025) Tj ET
 BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 597.934 Tm (System-grade multi-band audio customizer for Android with real-time low-latency DSP, monetized globally via AdMob - rated) Tj ET
-BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 585.134 Tm (4.6+ on Google Play.) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 585.134 Tm (4.3 on Google Play.) Tj ET
 BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 570.662 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 570.662 Tm (4.6+ rating on Google Play) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 570.662 Tm (4.3 stars from 24 Google Play reviews) Tj ET
 BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 558.334 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 558.334 Tm (Real-time low-latency DSP rendering) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 558.334 Tm (1K+ installs on Google Play) Tj ET
 BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 546.006 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 546.006 Tm (AdMob banner & interstitial monetization flow) Tj ET
-BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 531.498 Tm (https://play.google.com/store/apps/dev?id=5627377990901054380 | https://github.com/amirudinR/ikanequalizer) Tj ET
-BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 519.998 Tm (Kotlin / Android Audio SDK / AdMob) Tj ET
-BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 498.694 Tm (MindLog AI Diary) Tj ET
-BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 486.67 Tm (2025) Tj ET
-BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 472.35 Tm (Voice-first journaling app with speech-to-text capture, offline logging, and seamless Firebase cross-device sync.) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 457.878 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 457.878 Tm (Voice-to-text with on-device capture) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 445.55 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 445.55 Tm (Automatic entry categorization with offline cache) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 433.222 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 433.222 Tm (Reliable cross-device Firebase sync) Tj ET
-BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 418.714 Tm (https://play.google.com/store/apps/dev?id=5627377990901054380) Tj ET
-BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 407.214 Tm (React Native / Voice-to-Text / Firebase) Tj ET
-BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 385.91 Tm (Flashlight Pro Extreme) Tj ET
-BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 373.886 Tm (2025) Tj ET
-BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 359.566 Tm (Latency-free LED utility with a Morse code engine, strobing controls, and zero unnecessary background battery drain.) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 345.094 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 345.094 Tm (Near-zero hardware response latency) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 332.766 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 332.766 Tm (Morse code strobe engine included) Tj ET
-BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 320.438 Tm (-) Tj ET
-BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 320.438 Tm (Zero unnecessary background execution) Tj ET
-BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 305.93 Tm (https://play.google.com/store/apps/dev?id=5627377990901054380) Tj ET
-BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 294.43 Tm (Android SDK / CameraManager API) Tj ET
-BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 273.126 Tm (9router) Tj ET
-BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 261.102 Tm (2026) Tj ET
-BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 246.782 Tm (Open-source JavaScript project published under the MIT license.) Tj ET
-BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 232.13 Tm (https://github.com/amirudinR/9router) Tj ET
-BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 220.63 Tm (JavaScript / Open Source / MIT) Tj ET
-BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 199.326 Tm (Avataraang) Tj ET
-BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 187.302 Tm (2026) Tj ET
-BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 172.982 Tm (Interactive web experience built with JavaScript and deployed on Vercel.) Tj ET
-BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 158.33 Tm (https://avataraang.vercel.app | https://github.com/amirudinR/Avataraang) Tj ET
-BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 146.83 Tm (JavaScript / Vercel) Tj ET
-BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 114.494 Tm (SKILLS) Tj ET
-52 106.054 m 543.276 106.054 l 0.549 0.184 0.141 RG 0.8 w S
-BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 87.674 Tm (Mobile:) Tj ET
-BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 86.002 74.546 Tm (React Native, Kotlin, Android SDK, Offline-First Architecture, Mobile Hardware Integration) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 546.006 Tm (Real-time low-latency DSP rendering) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 533.678 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 533.678 Tm (AdMob banner & interstitial monetization flow) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 519.17 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.equalizer | https://github.com/amirudinR/ikanequalizer) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 507.67 Tm (Kotlin / Android Audio SDK / AdMob) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 486.366 Tm (Mindlog) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 474.342 Tm (2025) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 460.022 Tm (Voice-first journaling app with speech-to-text capture, offline logging, biometric/PIN entry lock, and Firebase cross-device) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 447.222 Tm (sync.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 432.75 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 432.75 Tm (Voice-to-text with on-device capture) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 420.422 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 420.422 Tm (Biometric and PIN lock for private entries) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 408.094 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 408.094 Tm (Reliable cross-device Firebase sync) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 393.586 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.mindlog) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 382.086 Tm (React Native / Voice-to-Text / Firebase / Biometric Lock) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 360.782 Tm (Flashlight Pro Extreme) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 348.758 Tm (2025) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 334.438 Tm (Latency-free LED utility with a Morse code engine, strobing controls, and zero unnecessary background battery drain.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 319.966 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 319.966 Tm (Near-zero hardware response latency) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 307.638 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 307.638 Tm (Morse code strobe engine included) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 295.31 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 295.31 Tm (Zero unnecessary background execution) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 280.802 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.flashlightpro) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 269.302 Tm (Android SDK / CameraManager API) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 247.998 Tm (Tumbas POS & Business) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 235.974 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 221.654 Tm (All-in-one POS and business management app covering cashier flows, warehouse stock, accounts receivable, and turnover) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 208.854 Tm (reporting.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 194.382 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 194.382 Tm (Adaptive cashier modes for retail, barbershop, and laundry) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 182.054 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 182.054 Tm (Stocktaking, repacking, and low-stock alerts) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 169.726 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 169.726 Tm (Daily and monthly turnover & profit-loss reports) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 155.218 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.tumbas) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 143.718 Tm (Kotlin / SQLite / Bluetooth Printing / Barcode Scanner) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 122.414 Tm (Tracking Actifity) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 110.39 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 96.07 Tm (Habit and task tracker with mood logging, weekly and monthly progress charts, and scheduled reminders.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 81.598 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 81.598 Tm (Daily habit, task, and mood logging in one flow) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 69.27 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 69.27 Tm (Weekly and monthly completion statistics) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 56.942 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 56.942 Tm (English and Indonesian localization) Tj ET
 52 36 m 543.276 36 l 0.72 0.69 0.63 RG 0.4 w S
-BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 2 of 3) Tj ET
-endstream
-endobj
-12 0 obj
-<< /Length 1319 >>
-stream
-BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 778.51 Tm (Web:) Tj ET
-BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 76.498 765.382 Tm (TypeScript, React.js, JavaScript \(ES6+\), HTML5 / CSS3, Tailwind CSS) Tj ET
-BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 750.41 Tm (Backend & Cloud:) Tj ET
-BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 132.01 737.282 Tm (SQLite & Room, Firebase, Supabase, RESTful APIs, GraphQL) Tj ET
-BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 722.31 Tm (Tools & Workflow:) Tj ET
-BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 133.504 709.182 Tm (Git & GitHub, ESLint / Prettier, GitHub Actions, n8n Automation, Figma UI/UX) Tj ET
-BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 682.03 Tm (EDUCATION) Tj ET
-52 673.59 m 543.276 673.59 l 0.549 0.184 0.141 RG 0.8 w S
-BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 654.062 Tm (Bachelor's Degree \(S.Kom\) in Informatics Engineering) Tj ET
-BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 461.997 642.038 Tm (Aug 2021 - Aug 2025) Tj ET
-BT /F3 9 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 628.21 Tm (STMIK Widya Cipta Dharma) Tj ET
-BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 615.382 Tm (GPA 3.54/4.00 - Cum Laude) Tj ET
-52 36 m 543.276 36 l 0.72 0.69 0.63 RG 0.4 w S
-BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 3 of 3) Tj ET
+BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 2 of 4) Tj ET
 endstream
 endobj
 13 0 obj
-<< /Title (Amirudin Ridwan - Senior Mobile & Web Engineer) /Author (Amirudin Ridwan) /Subject (Curriculum Vitae) /Keywords (React Native, Kotlin, Android SDK, Offline-First Architecture, Mobile Hardware Integration, TypeScript, React.js, JavaScript \(ES6+\), HTML5 / CSS3, Tailwind CSS, SQLite & Room, Firebase, Supabase, RESTful APIs, GraphQL, Git & GitHub, ESLint / Prettier, GitHub Actions, n8n Automation, Figma UI/UX) /Creator (cv-keren resume generator) /Producer (hand-rolled, zero dependencies) /CreationDate (D:20260926093309Z) >>
+<< /Length 6838 >>
+stream
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 779.166 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.trackingactifity) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 767.666 Tm (Kotlin / Notifications / Charts / Dark Mode) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 746.362 Tm (Status Saver - WA) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 734.338 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 720.018 Tm (WhatsApp status saver with a floating capture bubble that auto-files saved photos and videos into per-contact folders) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 707.218 Tm (on-device.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 692.746 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 692.746 Tm (Floating bubble capture straight from the status screen) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 680.418 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 680.418 Tm (Automatic per-contact folders via the Accessibility API) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 668.09 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 668.09 Tm (High-resolution image and HD video saving) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 653.582 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.wasaver) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 642.082 Tm (Kotlin / Accessibility API / Media Storage) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 620.778 Tm (Copy Clipboard) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 608.754 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 594.434 Tm (Offline clipboard history app that captures copied text in the background and makes it searchable, pinnable, and categorisable.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 579.962 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 579.962 Tm (Background clipboard capture with no paste required) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 567.634 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 567.634 Tm (Real-time search across saved clips) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 555.306 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 555.306 Tm (Pinning and colour-coded categories, stored offline) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 540.798 Tm (https://play.google.com/store/apps/details?id=com.amir.copyclipboard) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 529.298 Tm (Kotlin / ClipboardManager / Room) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 507.994 Tm (The Last Fence) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 495.97 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 481.65 Tm (Endless wave-survival game with hero progression, weekly challenges, and a global leaderboard backed by cloud saves.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 467.178 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 467.178 Tm (Wave difficulty scaling with endless runs) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 454.85 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 454.85 Tm (Hero unlocking and upgrades via earned crystals) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 442.522 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 442.522 Tm (Cloud save with offline guest-mode fallback) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 428.014 Tm (https://play.google.com/store/apps/details?id=com.porosdigital.thelastfence) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 416.514 Tm (Kotlin / Google Sign-In / Cloud Save) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 395.21 Tm (Memory Match) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 383.186 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 368.866 Tm (Card-matching brain-training game with escalating level sizes, star rewards, and a global leaderboard.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 354.394 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 354.394 Tm (Progressive card counts across endless levels) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 342.066 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 342.066 Tm (Star-based scoring per cleared board) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 329.738 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 329.738 Tm (Global leaderboard for high-score comparison) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 315.23 Tm (https://play.google.com/store/apps/details?id=com.amir.memorymatch) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 303.73 Tm (Kotlin / Game Loop / Local Persistence) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 282.426 Tm (Kotoba Pro) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 270.402 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 256.082 Tm (Offline Japanese vocabulary trainer with romaji, kana and kanji views, text-to-speech audio, and flashcard study sessions.) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 241.61 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 241.61 Tm (Hiragana, katakana, kanji, and romaji per entry) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 229.282 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 229.282 Tm (Spoken audio for pronunciation practice) Tj ET
+BT /F1 9.2 Tf 0.29 0.27 0.23 rg 1 0 0 1 54 216.954 Tm (-) Tj ET
+BT /F1 9.2 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 63 216.954 Tm (Fully offline study mode) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 202.446 Tm (https://play.google.com/store/apps/details?id=com.amir.kotobapro) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 190.946 Tm (Kotlin / Text-to-Speech / Offline-First) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 169.642 Tm (9router) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 157.618 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 143.298 Tm (Open-source JavaScript project published under the MIT license.) Tj ET
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 128.646 Tm (https://github.com/amirudinR/9router) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 117.146 Tm (JavaScript / Open Source / MIT) Tj ET
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 95.842 Tm (Avataraang) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 524.15 83.818 Tm (2026) Tj ET
+BT /F1 9.6 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 69.498 Tm (Interactive web experience built with JavaScript and deployed on Vercel.) Tj ET
+52 36 m 543.276 36 l 0.72 0.69 0.63 RG 0.4 w S
+BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 3 of 4) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Length 1921 >>
+stream
+BT /F3 8.2 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 779.166 Tm (https://avataraang.vercel.app | https://github.com/amirudinR/Avataraang) Tj ET
+BT /F3 8.2 Tf 0.2 Tc 0.42 0.39 0.33 rg 1 0 0 1 52 767.666 Tm (JavaScript / Vercel) Tj ET
+BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 735.33 Tm (SKILLS) Tj ET
+52 726.89 m 543.276 726.89 l 0.549 0.184 0.141 RG 0.8 w S
+BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 708.51 Tm (Mobile:) Tj ET
+BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 86.002 695.382 Tm (React Native, Kotlin, Android SDK, Offline-First Architecture, Mobile Hardware Integration) Tj ET
+BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 680.41 Tm (Web:) Tj ET
+BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 76.498 667.282 Tm (TypeScript, React.js, JavaScript \(ES6+\), HTML5 / CSS3, Tailwind CSS) Tj ET
+BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 652.31 Tm (Backend & Cloud:) Tj ET
+BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 132.01 639.182 Tm (SQLite & Room, Firebase, Supabase, RESTful APIs, GraphQL) Tj ET
+BT /F4 9 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 624.21 Tm (Tools & Workflow:) Tj ET
+BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 133.504 611.082 Tm (Git & GitHub, ESLint / Prettier, GitHub Actions, n8n Automation, Figma UI/UX) Tj ET
+BT /F4 8 Tf 1.4 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 583.93 Tm (EDUCATION) Tj ET
+52 575.49 m 543.276 575.49 l 0.549 0.184 0.141 RG 0.8 w S
+BT /F2 10.4 Tf 0 Tc 0.102 0.094 0.078 rg 1 0 0 1 52 555.962 Tm (Bachelor's Degree \(S.Kom\) in Informatics Engineering) Tj ET
+BT /F3 8.6 Tf 0 Tc 0.42 0.39 0.33 rg 1 0 0 1 461.997 543.938 Tm (Aug 2021 - Aug 2025) Tj ET
+BT /F3 9 Tf 0 Tc 0.549 0.184 0.141 rg 1 0 0 1 52 530.11 Tm (STMIK Widya Cipta Dharma) Tj ET
+BT /F1 9.4 Tf 0 Tc 0.29 0.27 0.23 rg 1 0 0 1 52 517.282 Tm (GPA 3.54/4.00 - Cum Laude) Tj ET
+52 36 m 543.276 36 l 0.72 0.69 0.63 RG 0.4 w S
+BT /F3 7.6 Tf 0.42 0.39 0.33 rg 1 0 0 1 504.402 24 Tm (Page 4 of 4) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Title (Amirudin Ridwan - Senior Mobile & Web Engineer) /Author (Amirudin Ridwan) /Subject (Curriculum Vitae) /Keywords (React Native, Kotlin, Android SDK, Offline-First Architecture, Mobile Hardware Integration, TypeScript, React.js, JavaScript \(ES6+\), HTML5 / CSS3, Tailwind CSS, SQLite & Room, Firebase, Supabase, RESTful APIs, GraphQL, Git & GitHub, ESLint / Prettier, GitHub Actions, n8n Automation, Figma UI/UX) /Creator (cv-keren resume generator) /Producer (hand-rolled, zero dependencies) /CreationDate (D:20260926095607Z) >>
 endobj
 xref
-0 14
+0 16
 0000000000 65535 f 
 0000000015 00000 n 
 0000000064 00000 n 
-0000000133 00000 n 
-0000000232 00000 n 
-0000000330 00000 n 
-0000000427 00000 n 
-0000000529 00000 n 
-0000000693 00000 n 
-0000000857 00000 n 
-0000001021 00000 n 
-0000007007 00000 n 
-0000013227 00000 n 
-0000014599 00000 n 
+0000000140 00000 n 
+0000000239 00000 n 
+0000000337 00000 n 
+0000000434 00000 n 
+0000000536 00000 n 
+0000000700 00000 n 
+0000000864 00000 n 
+0000001028 00000 n 
+0000001193 00000 n 
+0000007179 00000 n 
+0000014382 00000 n 
+0000021273 00000 n 
+0000023247 00000 n 
 trailer
-<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+<< /Size 16 /Root 1 0 R /Info 15 0 R >>
 startxref
-15155
+23803
 %%EOF

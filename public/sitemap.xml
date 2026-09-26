@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Single-page site: one URL, the site root.
+  NOTE: the origin below is a static fallback and MUST match the SITE_URL
+  environment variable set on the Vercel project
+  (Project -> Settings -> Environment Variables -> SITE_URL).
+  Update <lastmod> when the page content changes.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://amircv.vercel.app/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

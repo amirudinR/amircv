@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Midnight Signal — Global Design Foundation
+   Marginalia — Global Design Foundation (printed paper / editorial)
    ========================================================================== */
 
 /* Reset */
@@ -13,26 +13,53 @@
 
 /* Design Tokens */
 :root {
-  /* Colors */
-  --bg: #0A0A0F;
-  --surface: #14141C;
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #4D7CFE;
-  --accent-2: #A78BFA;
-  --text: #F2F2F5;
-  --text-muted: #A1A1AF;
+  /* Paper */
+  --bg: #f4f0e6;
+  --bg-deep: #eae4d6;
+  --surface: #fbf8f1;
+  --surface-2: #f0ebdf;
 
-  /* Typography */
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  /* Ink */
+  --ink: #1a1814;
+  --ink-soft: #3a342b;
+  --text: #1a1814;
+  --text-muted: #6b6355;
 
-  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.85rem);
-  --text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
-  --text-h3: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
-  --text-h2: clamp(1.75rem, 1.4rem + 1.8vw, 3rem);
-  --text-h1: clamp(2.5rem, 1.8rem + 3.5vw, 5.5rem);
-  --text-hero: clamp(3rem, 2rem + 6vw, 9rem);
+  /* Accents */
+  --accent: #8c2f24;
+  --accent-2: #6b4a2f;
+  --accent-3: #2f4858;
+  --highlight: #f5e07a;
+
+  --border: rgba(26, 24, 20, 0.14);
+  --border-strong: rgba(26, 24, 20, 0.3);
+  --border-faint: rgba(26, 24, 20, 0.07);
+
+  /* WebGL scene — read by the R3F components via getComputedStyle */
+  --scene-ink: #2a2620;
+  --scene-ink-soft: #6b6355;
+  --scene-paper: #f4f0e6;
+  --scene-stain: #8c2f24;
+
+  /* Typography.
+     Fraunces is loaded as a variable font limited to 400-600, so heading
+     weights are capped at 600 to avoid synthetic bolding. */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --text-sm: clamp(0.78rem, 0.75rem + 0.16vw, 0.84rem);
+  --text-base: clamp(1rem, 0.97rem + 0.2vw, 1.08rem);
+  --text-h3: clamp(1.2rem, 1.09rem + 0.6vw, 1.55rem);
+  --text-h2: clamp(1.7rem, 1.42rem + 1.5vw, 2.6rem);
+  --text-h1: clamp(2.2rem, 1.72rem + 2.6vw, 4.2rem);
+  --text-hero: clamp(2.9rem, 2rem + 5vw, 7.5rem);
+
+  /* Warm shadows. Neutral black reads as dirt on cream. */
+  --shadow-xs: 0 1px 2px rgba(74, 58, 40, 0.07);
+  --shadow-sm: 0 1px 2px rgba(74, 58, 40, 0.07), 0 2px 6px rgba(74, 58, 40, 0.05);
+  --shadow-md: 0 1px 2px rgba(74, 58, 40, 0.06), 0 8px 24px rgba(74, 58, 40, 0.07);
+  --shadow-lg: 0 2px 6px rgba(74, 58, 40, 0.06), 0 20px 48px rgba(74, 58, 40, 0.1);
 
   /* Spacing (8px scale) */
   --space-1: 8px;
@@ -52,20 +79,30 @@
 
   /* Layout */
   --radius: 16px;
+  --radius-sm: 8px;
   --max-w: 1200px;
+
+  /* Paper fibre + mottle. Two desaturated turbulence tiles, baked at low
+     alpha and used as background layers so the grain sits under the text
+     instead of dirtying it. */
+  --paper-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23f)' opacity='0.055'/%3E%3C/svg%3E");
+  --paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23m)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
 /* Base */
 html {
-  scroll-behavior: smooth;
-  /* Keep section titles clear of the fixed nav when anchors are followed */
+  /* No `scroll-behavior: smooth` here: Lenis drives programmatic scrolling and
+     a native smooth scroll on the root fights it, producing doubled motion and
+     anchors that land in the wrong place. */
   scroll-padding-top: 88px;
-  /* Belt-and-suspenders against decorative layers widening the page */
+  /* clip, not hidden: `overflow-x: hidden` on html/body would create a scroll
+     container that breaks position: sticky and interferes with Lenis. */
   overflow-x: clip;
 }
 
 body {
   background-color: var(--bg);
+  background-image: var(--paper-mottle), var(--paper-fibre);
   color: var(--text);
   font-family: var(--font-body);
   font-feature-settings: 'cv01', 'ss03';
@@ -73,9 +110,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
   min-height: 100vh;
-  /* Kill the iOS tap flash on interactive elements */
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -83,9 +118,19 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+  /* Fraunces carries an optical-size axis; leave font-optical-sizing on auto
+     so large headings pick up the display cut automatically. */
+  font-optical-sizing: auto;
+}
+
+/* Letterpress: ink pressed into a sheet catches a highlight on its lower edge. */
+.press {
+  text-shadow:
+    0 1px 0 rgba(255, 253, 248, 0.65),
+    0 -1px 0 rgba(74, 58, 40, 0.05);
 }
 
 img, picture, video, canvas, svg {
@@ -98,7 +143,6 @@ input, button, textarea, select {
   color: inherit;
 }
 
-/* Remove the 300ms tap delay on touch devices and allow instant taps */
 a,
 button,
 [role='button'] {
@@ -109,10 +153,10 @@ p {
   text-wrap: pretty;
 }
 
-/* Selection */
+/* Selection — a highlighter swipe, not a brand wash. */
 ::selection {
-  background-color: var(--accent);
-  color: var(--bg);
+  background-color: var(--highlight);
+  color: var(--ink);
 }
 
 /* Scrollbar */
@@ -122,17 +166,17 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: var(--bg-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--surface);
+  background: #cfc7b4;
   border-radius: 8px;
-  border: 2px solid var(--bg);
+  border: 2px solid var(--bg-deep);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--ink-soft);
 }
 
 /* Focus */
@@ -162,10 +206,10 @@ p {
   left: var(--space-2);
   z-index: 9999;
   padding: var(--space-2) var(--space-3);
-  background: var(--accent);
+  background: var(--ink);
   color: var(--bg);
   font-weight: 600;
-  border-radius: 0 0 var(--radius) var(--radius);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   text-decoration: none;
   transition: top 0.2s ease;
 }
@@ -174,13 +218,15 @@ p {
   top: 0;
 }
 
-/* Scroll Reveal */
+/* Scroll Reveal.
+   The starting opacity stays at 0.75: 0.58 was a momentary sub-4.5:1 dip
+   against the paper while a block waited to enter the viewport. */
 .reveal {
-  opacity: 0.58;
-  transform: translateY(18px) scale(0.995);
+  opacity: 0.75;
+  transform: translateY(14px);
   transition:
-    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
@@ -188,15 +234,18 @@ p {
   transform: translateY(0);
 }
 
-/* Film Grain Overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+/* Opt-in: ink resolving into focus. Use on headings, not on long body copy —
+   a blur filter on many elements is expensive during scroll. */
+.reveal-ink {
+  filter: blur(1.6px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-ink.is-visible {
+  filter: blur(0);
 }
 
 /* Reduced Motion */
@@ -210,23 +259,25 @@ body::after {
     scroll-behavior: auto !important;
   }
 
-  .reveal {
+  .reveal,
+  .reveal-ink {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }
 
 /* Compact mobile scale: preserve comfortable touch targets while reducing
-   visual density and oversized desktop typography. */
+   visual density and oversized display typography. */
 @media (max-width: 767px) {
   :root {
-    --text-sm: 0.7rem;
-    --text-base: 0.9rem;
-    --text-h3: 1.15rem;
-    --text-h2: clamp(1.45rem, 6vw, 2rem);
-    --text-h1: clamp(2rem, 10vw, 3rem);
-    --text-hero: clamp(2.35rem, 13vw, 4.2rem);
+    --text-sm: 0.72rem;
+    --text-base: 0.92rem;
+    --text-h3: 1.12rem;
+    --text-h2: clamp(1.4rem, 5.6vw, 1.9rem);
+    --text-h1: clamp(1.9rem, 8.5vw, 2.6rem);
+    --text-hero: clamp(2.2rem, 11vw, 3.6rem);
     --space-1: 6px;
     --space-2: 12px;
     --space-3: 18px;
@@ -245,7 +296,7 @@ body::after {
   }
 
   body {
-    line-height: 1.55;
+    line-height: 1.58;
   }
 
   .container {

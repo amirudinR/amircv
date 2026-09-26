@@ -62,6 +62,9 @@ export interface Project {
   impact?: string[];
   challenge?: string;
   engineering?: string;
+  storeUrl?: string;
+  installs?: string;
+  rating?: string;
 }
 
 export interface EducationItem {
@@ -74,6 +77,16 @@ export interface EducationItem {
   honors?: string;
 }
 
+export interface WorkPreferenceItem {
+  label: string;
+  value: string;
+}
+
+export interface WorkPreferences {
+  items: WorkPreferenceItem[];
+  note?: string;
+}
+
 export interface CV {
   profile: Profile;
   socials: Social[];
@@ -82,4 +95,5 @@ export interface CV {
   skills: SkillGroup[];
   projects: Project[];
   education: EducationItem[];
+  preferences: WorkPreferences;
 }
