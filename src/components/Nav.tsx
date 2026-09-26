@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
-import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { scrollToTarget } from '@/lib/gsap';
 import styles from './Nav.module.css';
 
 interface NavLink {
@@ -11,42 +11,122 @@ interface NavProps {
   links: NavLink[];
 }
 
+/** Bar height — keep in sync with `.inner` in Nav.module.css. */
+const HEADER_HEIGHT = 68;
+/** Reading line: just below the bar, so a section only becomes current once its
+ *  heading has cleared the header. Matches the offset that anchor navigation
+ *  lands sections at (`scroll-padding-top`), so a link you click lights up
+ *  immediately. */
+const READING_LINE = HEADER_HEIGHT + 24;
+/** Within this many pixels of the bottom, the last link is always current. */
+const BOTTOM_EPSILON = 2;
+/** Scroll distance after which the bar switches to its opaque state. */
+const SCROLLED_AT = 40;
+
 export function Nav({ links }: NavProps) {
-  const reducedMotion = usePrefersReducedMotion();
   const [activeId, setActiveId] = useState<string>(links[0]?.id ?? '');
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const menuId = 'primary-navigation';
 
-  // More opaque background once past the top fold
+  // One passive, rAF-coalesced handler resolves both the opaque bar state and
+  // the current section. No IntersectionObserver: with sections of wildly
+  // different heights, "last entry to report wins" made the active link jump
+  // around, and the final link rarely lit up at the bottom of the page.
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const ids = links.map((link) => link.id);
+    if (ids.length === 0) return;
 
-  // Scroll-spy: mark the link whose section is in view
-  useEffect(() => {
-    const sections = links
-      .map((link) => document.getElementById(link.id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (sections.length === 0) return;
+    let frame = 0;
+    let disposed = false;
+    // Cached in document space: a section's top only moves when the layout
+    // above it reflows, not while the page scrolls.
+    let entries: { id: string; top: number }[] = [];
+    let pageHeight = 0;
+    let stale = true;
+    let scrolled = false;
+    let currentId = activeId;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
+    const measure = () => {
+      pageHeight = document.documentElement.scrollHeight;
+      entries = ids
+        .map((id) => {
+          const element = document.getElementById(id);
+          if (!element) return null;
+          return { id, top: element.getBoundingClientRect().top + window.scrollY };
+        })
+        .filter((entry): entry is { id: string; top: number } => entry !== null);
+    };
+
+    const resolve = () => {
+      frame = 0;
+      if (stale) {
+        measure();
+        stale = false;
+      }
+      if (entries.length === 0) return;
+
+      const y = window.scrollY;
+
+      if ((y > SCROLLED_AT) !== scrolled) {
+        scrolled = y > SCROLLED_AT;
+        setIsScrolled(scrolled);
+      }
+
+      const maxScroll = Math.max(0, pageHeight - window.innerHeight);
+      let next: string;
+      if (y >= maxScroll - BOTTOM_EPSILON) {
+        // The last section is followed by the footer, so its heading can sit
+        // above the reading line while it is still fully in view. At the
+        // bottom of the page, the final link is the honest answer.
+        next = entries[entries.length - 1].id;
+      } else {
+        // Last section whose top has reached the reading line. Independent of
+        // section heights, and always defined.
+        const line = y + READING_LINE;
+        next = entries[0].id;
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
+          if (entry.top > line) break;
+          next = entry.id;
         }
-      },
-      { rootMargin: '-40% 0px -55% 0px', threshold: 0 },
-    );
+      }
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      // Only re-render when the answer actually changed.
+      if (next !== currentId) {
+        currentId = next;
+        setActiveId(next);
+      }
+    };
+
+    const schedule = () => {
+      if (!disposed && frame === 0) frame = requestAnimationFrame(resolve);
+    };
+    const invalidate = () => {
+      stale = true;
+      schedule();
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', invalidate, { passive: true });
+
+    // The page reflows after load — web fonts swap, the lazy WebGL hero mounts,
+    // media decodes. A stale cached height is the usual reason the last link
+    // never lights up, so re-measure whenever the document resizes.
+    const observer = new ResizeObserver(invalidate);
+    observer.observe(document.documentElement);
+    observer.observe(document.body);
+    void document.fonts?.ready.then(invalidate);
+
+    resolve();
+
+    return () => {
+      disposed = true;
+      if (frame !== 0) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', invalidate);
+      observer.disconnect();
+    };
   }, [links]);
 
   // Escape closes the mobile menu and returns focus to the toggle
@@ -74,20 +154,16 @@ export function Nav({ links }: NavProps) {
 
   const handleLinkClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
-    document.getElementById(id)?.scrollIntoView({
-      behavior: reducedMotion ? 'auto' : 'smooth',
-    });
-    setActiveId(id);
+    const target = document.getElementById(id);
+    if (target) scrollToTarget(target);
     setIsOpen(false);
-    // Keep focus out of the panel that just became hidden
-    if (window.matchMedia('(max-width: 767px)').matches) {
-      toggleRef.current?.focus();
-    }
+    // The panel just collapsed and took focus with it, so hand focus back.
+    if (isOpen) toggleRef.current?.focus();
   };
 
   const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+    scrollToTarget(0);
     setIsOpen(false);
   };
 
@@ -108,7 +184,7 @@ export function Nav({ links }: NavProps) {
     <header className={navClass}>
       <nav className={`container ${styles.inner}`} aria-label="Primary">
         <a href="#" className={styles.logo} onClick={handleLogoClick}>
-           AR<span className={styles.logoDot}>.</span>
+          AR<span className={styles.logoDot}>.</span>
         </a>
 
         <ul className={styles.links}>
@@ -151,7 +227,11 @@ export function Nav({ links }: NavProps) {
         </span>
       </nav>
 
-      <div id={menuId} className={panelClass} aria-hidden={!isOpen}>
+      {/* `inert` on the collapsed panel does what the hand-rolled tabIndex
+          bookkeeping did, and more: the links leave the tab order *and* the
+          accessibility tree. `visibility: hidden` covers browsers without
+          `inert`, so `aria-hidden` is not needed on top of either. */}
+      <div id={menuId} className={panelClass} inert={!isOpen}>
         <ul className={styles.panelLinks}>
           {links.map((link) => {
             const isActive = link.id === activeId;
@@ -161,7 +241,6 @@ export function Nav({ links }: NavProps) {
                   href={`#${link.id}`}
                   className={`${styles.panelLink} ${isActive ? styles.active : ''}`}
                   aria-current={isActive ? 'location' : undefined}
-                  tabIndex={isOpen ? undefined : -1}
                   onClick={(event) => handleLinkClick(event, link.id)}
                 >
                   {link.label}

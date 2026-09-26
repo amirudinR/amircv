@@ -1,38 +1,84 @@
-/* Skill/tech chip — level controls accent intensity */
+/* Skill/tech chip.
+   `level` (1 | 2 | 3) is an intensity signal, so the three states are built as
+   three steps of the same printed treatment rather than three unrelated looks:
+     1 — bare ink hairline, nothing filled
+     2 — oxblood hairline on a faint oxblood wash
+     3 — deeper oxblood wash, oxblood type, plus a leading tick so the level
+         still reads without relying on colour
+   All state lives in custom properties so the hover rules stay single-source
+   and a wrapping button (Skills.tsx) can restyle the chip wholesale. */
 
 .badge {
+  /* rest state — overridden wholesale by .level2 / .level3 */
+  --chip-fill: transparent;
+  --chip-ink: var(--text-muted);
+  --chip-line: var(--border);
+  --chip-line-hover: var(--border-strong);
+
   display: inline-flex;
   align-items: center;
+  gap: var(--space-1);
   padding: 4px 12px;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: 1.5;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: 1px solid var(--border);
+  color: var(--chip-ink);
+  background: var(--chip-fill);
+  border: 1px solid var(--chip-line);
   border-radius: 999px;
+  /* No `overflow: hidden` and no negative margins: Skills.tsx wraps this span
+     in a button that has to grow its hit area outward, and clipping here
+     would eat that padding. */
   transition:
     transform 0.2s ease,
     color 0.2s ease,
+    background-color 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .badge:hover {
   transform: translateY(-2px);
+  border-color: var(--chip-line-hover);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Level 2 — accent-tinted border + soft glow */
+/* Level 2 — familiar, handled often. Oxblood hairline, faint wash, ink type. */
 .level2 {
-  color: var(--text);
-  border-color: rgba(77, 124, 254, 0.45);
-  box-shadow: 0 0 12px rgba(77, 124, 254, 0.15);
+  --chip-fill: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  --chip-ink: var(--ink);
+  --chip-line: color-mix(in srgb, var(--accent) 32%, var(--border));
+  --chip-line-hover: color-mix(in srgb, var(--accent) 45%, var(--border));
 }
 
-/* Level 3 — strong accent tint + accent text */
+/* Level 3 — the strength of the profile. Oxblood type on a 15% oxblood wash
+   over the paper surface: 6.07:1, so it clears 4.5:1 on its own background. */
 .level3 {
-  color: var(--accent);
-  background: rgba(77, 124, 254, 0.15);
-  border-color: rgba(77, 124, 254, 0.55);
-  box-shadow: 0 0 16px rgba(77, 124, 254, 0.2);
+  --chip-fill: color-mix(in srgb, var(--accent) 15%, var(--surface));
+  --chip-ink: var(--accent);
+  --chip-line: color-mix(in srgb, var(--accent) 55%, var(--border));
+  --chip-line-hover: var(--accent);
+  font-weight: 700;
+}
+
+/* Non-colour level marker. currentColor so the selected state in
+   Skills.module.css, which inverts the chip, keeps a visible tick. */
+.level3::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    transition: none;
+  }
+
+  .badge:hover {
+    transform: none;
+    box-shadow: var(--shadow-xs);
+  }
 }

@@ -42,7 +42,11 @@ export default function App() {
         <Experience items={cv.experience} />
         <Projects projects={cv.projects} />
         <Education items={cv.education} />
-        <Contact profile={cv.profile} socials={cv.socials} />
+        <Contact
+          profile={cv.profile}
+          socials={cv.socials}
+          preferences={cv.preferences}
+        />
       </main>
       <Footer profile={cv.profile} socials={cv.socials} />
     </>

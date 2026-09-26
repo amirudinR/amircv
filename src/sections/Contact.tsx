@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Profile, Social } from '@/data/types';
+import type { Profile, Social, WorkPreferences } from '@/data/types';
 import { Section } from '@/components/Section';
 import { useMagnetic } from '@/hooks/useMagnetic';
-import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import styles from './Contact.module.css';
 
 interface ContactProps {
   profile: Profile;
   socials: Social[];
+  preferences: WorkPreferences;
 }
 
 async function copyEmail(email: string): Promise<boolean> {
@@ -35,14 +35,13 @@ async function copyEmail(email: string): Promise<boolean> {
   }
 }
 
-export function Contact({ profile, socials }: ContactProps) {
+export function Contact({ profile, socials, preferences }: ContactProps) {
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const requestRef = useRef(0);
   const mailRef = useMagnetic<HTMLAnchorElement>(0.3);
-  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     return () => {
@@ -72,12 +71,7 @@ export function Contact({ profile, socials }: ContactProps) {
   };
 
   return (
-    <Section
-      id="contact"
-      eyebrow="06 — Contact"
-      title="Let's build something"
-      className={`${styles.contact} ${reducedMotion ? styles.reducedMotion : ''}`}
-    >
+    <Section id="contact" eyebrow="06 — Contact" title="Let's build something" className={styles.contact}>
       <div className={styles.ambient} aria-hidden="true" />
       <div className={styles.inner}>
         <p className={`reveal ${styles.statement}`}>
@@ -85,13 +79,36 @@ export function Contact({ profile, socials }: ContactProps) {
         </p>
 
         <p className={`reveal ${styles.lede}`}>
-          {profile.availability} Based in {profile.location} — happy to chat about new
+          {profile.availability}. Based in {profile.location} — happy to chat about new
           opportunities, collaborations, or just a good technical challenge.
         </p>
 
+        {/* Relocation logistics live here rather than in a section of their own:
+            they are part of the same conversation as "how do I reach you". */}
+        <div className={`reveal ${styles.prefs}`}>
+          <h3 className={styles.prefsHeading}>Practical details</h3>
+
+          <dl className={styles.prefsList}>
+            {preferences.items.map((item) => (
+              <div key={item.label} className={styles.prefsRow}>
+                <dt className={styles.prefsLabel}>{item.label}</dt>
+                <dd className={styles.prefsValue}>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          {preferences.note && (
+            <p className={styles.prefsNote}>
+              <span className={styles.prefsNoteLabel}>Note</span>
+              {preferences.note}
+            </p>
+          )}
+        </div>
+
         <div className={`reveal ${styles.emailRow}`}>
           <a ref={mailRef} href={`mailto:${profile.email}`} className={styles.mailButton}>
-            {profile.email}
+            <span className={styles.mailButtonLabel}>Email</span>
+            <span className={styles.mailAddress}>{profile.email}</span>
           </a>
           <button
             type="button"
@@ -119,15 +136,31 @@ export function Contact({ profile, socials }: ContactProps) {
               target="_blank"
               rel="noreferrer"
               className={styles.socialLink}
+              aria-label={`${social.platform}: ${social.label} (opens in a new tab)`}
             >
-              {social.label}
+              <span className={styles.socialPlatform}>{social.platform}</span>
+              <span className={styles.socialLabel}>{social.label}</span>
             </a>
           ))}
         </nav>
 
-        <a href="/resume.pdf" className={`reveal ${styles.resumeLink}`}>
-          Download CV (PDF)
-        </a>
+        <div className={`reveal ${styles.actions}`}>
+          <a
+            href="/resume.pdf"
+            className={styles.resumeLink}
+            aria-label="Download CV as a PDF file"
+          >
+            Download CV (PDF)
+          </a>
+          <button
+            type="button"
+            className={styles.printButton}
+            onClick={() => window.print()}
+            aria-label="Print this CV, or save it as a PDF from the print dialog"
+          >
+            Print / Save as PDF
+          </button>
+        </div>
       </div>
     </Section>
   );

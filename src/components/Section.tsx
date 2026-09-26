@@ -19,8 +19,8 @@ export function Section({ id, eyebrow, title, children, className }: SectionProp
     <section id={id} ref={sectionRef} className={sectionClass}>
       <div className="container">
         <header className={styles.header}>
-          <p className="eyebrow reveal">{eyebrow}</p>
-          <h2 className={`reveal ${styles.title}`}>{title}</h2>
+          <p className={`eyebrow reveal ${styles.kicker}`}>{eyebrow}</p>
+          <h2 className={`reveal reveal-ink press ${styles.title}`}>{title}</h2>
           <span className={`reveal ${styles.bar}`} aria-hidden="true" />
         </header>
         {children}

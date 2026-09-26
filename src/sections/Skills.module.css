@@ -1,58 +1,143 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-6);
+/* ==========================================================================
+   Skills — a card index of expertise areas. The filter row is a row of tabs,
+   the skills are chips sitting inside real 44px buttons, and the cards are
+   paper surfaces with a ruled hairline under the heading.
+   ========================================================================== */
+
+/* Filter tabs ---------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
-.filters { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-3); }
-.filters button { min-height: 44px; padding: 8px 16px; border: 1px solid var(--border); border-radius: calc(var(--radius) / 2); background: transparent; color: var(--text-muted); cursor: pointer; font-size: var(--text-sm); }
-.filters button:hover { color: var(--text); border-color: var(--text-muted); }
-.filters button[aria-pressed='true'] { color: var(--bg); background: var(--text); border-color: var(--text); }
-.filters button[aria-pressed='true']:hover { color: var(--bg); background: var(--text); border-color: var(--text); }
-.filters button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
-.selectionHelp { min-height: 1.65em; margin: 0 0 var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
-.card[hidden] { display: none; }
+.filters button {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.filters button:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* Selected tab: the marked one. A tinted sheet plus an oxblood rule under the
+   baseline — no glow. */
+.filters button[aria-pressed='true'] {
+  position: relative;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border-color: var(--border-strong);
+  border-bottom-color: var(--accent);
+}
+
+.filters button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Status + hint -------------------------------------------------------------- */
+
+.status {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+}
+
+.hint {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+}
+
+/* Cards ---------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  /* Four categories: an auto-fit track resolved to three columns here and left
+     the fourth card orphaned on its own row. Two columns keeps a clean 2x2. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* When a filter narrows the grid to a single category, let it use the full
+   measure instead of sitting in a half-width column. */
+.card:not([hidden]):only-child {
+  grid-column: 1 / -1;
+}
+
+.card[hidden] {
+  display: none;
+}
 
 .card {
   position: relative;
-  overflow: hidden;
+  padding: var(--space-5) var(--space-4);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-6);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
 }
 
-/* Thin accent gradient line at card top */
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  opacity: 0.35;
-  transition: opacity 0.3s ease;
+/* Own the transition instead of inheriting .reveal's opacity/transform
+   shorthand, and confine the stagger to those two properties — a blanket
+   `transition-delay` would lag the hover response on every later hover too.
+   The doubled class beats `.reveal` on specificity rather than relying on
+   stylesheet order. */
+.grid .card {
+  --stagger: 0ms;
+
+  transition-property: opacity, transform, border-color, box-shadow;
+  transition-duration: 0.7s, 0.7s, 0.25s, 0.25s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1),
+    cubic-bezier(0.22, 1, 0.36, 1), ease, ease;
+  transition-delay: var(--stagger), var(--stagger), 0ms, 0ms;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+.grid .card:nth-child(2) {
+  --stagger: 80ms;
 }
 
-.card:hover::before {
-  opacity: 1;
+.grid .card:nth-child(3) {
+  --stagger: 160ms;
+}
+
+.grid .card:nth-child(4) {
+  --stagger: 240ms;
+}
+
+.grid .card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-faint);
 }
 
 .category {
@@ -60,91 +145,137 @@
   font-family: var(--font-display);
   font-size: var(--text-h3);
   font-weight: 600;
-  color: var(--text);
+  color: var(--ink);
 }
 
 .index {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
+/* Skill buttons --------------------------------------------------------------- */
+
 .badges {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  /* Row gap is 0: the buttons are already 44px tall, so extra vertical space
+     would only separate the chips further. */
+  gap: 0 var(--space-1);
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.badges::before {
-  content: '';
-  position: absolute;
-  top: var(--space-1);
-  bottom: var(--space-1);
-  left: 4px;
-  width: 1px;
-  background: color-mix(in srgb, var(--accent) 35%, var(--border));
 }
 
 .skillItem {
   display: inline-flex;
 }
 
+/* The badge is ~28px tall. The hit area is not: the button carries the
+   padding, so the target is 44px in both axes without clipping the chip (no
+   overflow, no negative offsets). */
 .skill {
-  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0;
+  padding: 0 var(--space-2);
   border: 0;
-  border-radius: calc(var(--radius) / 2);
+  border-radius: var(--radius-sm);
   background: transparent;
   cursor: pointer;
-  isolation: isolate;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
 }
 
-.skill::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: -8px;
-  width: 8px;
-  height: 1px;
-  background: color-mix(in srgb, var(--accent) 35%, var(--border));
+.skill:hover {
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+.skill:active {
+  transform: translateY(1px);
 }
 
 .skill > span {
   position: relative;
-  z-index: 1;
-  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
+/* The chip's own hover lift is a hover affordance from the glass era; on paper
+   the surrounding wash is the feedback. */
+.badges .skill:hover > span {
+  transform: none;
+}
+
+/* Same group as the selected skill: lit, but not marked. */
 .skillRelated > span {
-  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
-  color: var(--text);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--highlight) 30%, transparent);
+}
+
+/* Selected: pressed into the sheet, so the button itself takes the tint. */
+.skillSelected {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .skillSelected > span {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--bg);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: var(--surface);
 }
 
 .skill:focus-visible {
-  outline: 2px solid var(--accent-2);
-  outline-offset: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .card::before, .skill > span { transition: none !important; }
-  .card:hover { transform: none; }
+  .card,
+  .card::before,
+  .skill,
+  .skill > span,
+  .filters button {
+    transition: none !important;
+  }
+
+  .grid .card:hover,
+  .skill:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 767px) {
-  .card { padding: var(--space-4); }
-  .badges { gap: var(--space-1); }
+  .grid {
+    gap: var(--space-3);
+  }
+
+  .card {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .filters button {
+    padding: 0 var(--space-1);
+  }
+
+  .skill {
+    padding: 0 var(--space-1);
+  }
+}
+
+@media print {
+  /* print.css hides the status paragraph, but the hint is plain text. */
+  .hint {
+    display: none !important;
+  }
 }

@@ -1,3 +1,13 @@
+/* ==========================================================================
+   Section — the masthead every block of the page repeats: a mono marginal
+   label, the Fraunces title, and a highlighter swipe that underlines it.
+
+   The header's children are addressed structurally by styles/print.css
+   (`main > section > div > header > p / h2 / span[aria-hidden]`), so their
+   order and tag names are a contract. print.css re-measures the swipe as a flat
+   oxblood rule; the screen-only states live here.
+   ========================================================================== */
+
 .section {
   position: relative;
   padding-block: var(--space-12);
@@ -11,17 +21,53 @@
   margin-bottom: var(--space-6);
 }
 
+/* Marginal label: a short rule in front of the mono eyebrow, so the section
+   number reads like a tab someone annotated by hand. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.kicker::before {
+  content: '';
+  width: var(--space-3);
+  height: 2px;
+  background: var(--accent);
+}
+
 .title {
+  font-family: var(--font-display);
   font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--ink);
   text-wrap: balance;
 }
 
+/* Highlighter swipe.
+   `scale` and `rotate` are the individual transform properties, so they
+   compose with the `transform: translateY()` that the global .reveal class owns
+   — the stroke can sweep open without cancelling the reveal. */
 .bar {
   display: block;
-  width: 40px;
-  height: 1px;
-  margin-top: var(--space-1);
-  background: var(--text-muted);
+  width: 112px;
+  height: var(--space-1);
+  margin-top: calc(var(--space-1) * -1);
+  scale: 0 1;
+  rotate: -0.7deg;
+  transform-origin: left center;
+  border-radius: 2px;
+  /* Marker ink is denser along the bottom edge of the stroke. */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--highlight) 55%, transparent) 0 64%,
+    color-mix(in srgb, var(--highlight) 78%, transparent) 64% 100%
+  );
+  transition: scale 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bar.is-visible {
+  scale: 1 1;
 }
 
 @media (max-width: 767px) {
@@ -32,10 +78,34 @@
   .header {
     margin-bottom: var(--space-5);
   }
+
+  .bar {
+    width: 88px;
+    height: 6px;
+    margin-top: calc(var(--space-1) * -0.5);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bar {
-    animation: none;
+    transition: none;
+  }
+}
+
+@media print {
+  /* print.css cannot undo the individual transform properties, and .reveal-ink
+     blurs the title until it is revealed — a blurred or un-swept heading is a
+     broken print. */
+  .bar {
+    scale: 1 1 !important;
+    rotate: none !important;
+  }
+
+  .title {
+    filter: none !important;
+  }
+
+  .kicker::before {
+    height: 0.5mm;
   }
 }

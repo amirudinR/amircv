@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
 import type { Profile, Social } from '@/data/types';
-import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { scrollToTarget } from '@/lib/gsap';
 import styles from './Footer.module.css';
 
 interface FooterProps {
@@ -9,16 +8,7 @@ interface FooterProps {
 }
 
 export function Footer({ profile, socials }: FooterProps) {
-  const reducedMotion = usePrefersReducedMotion();
   const year = new Date().getFullYear();
-
-  const scrollToTop = useCallback(() => {
-    const reduce =
-      reducedMotion ||
-      (typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-  }, [reducedMotion]);
 
   return (
     <footer className={styles.footer}>
@@ -35,16 +25,17 @@ export function Footer({ profile, socials }: FooterProps) {
                   className={styles.socialLink}
                   href={social.url}
                   target="_blank"
-                  rel="noreferrer"
+                  aria-label={`${social.platform}: ${social.label}`}
+                  rel="noopener noreferrer"
                 >
-                  {social.label}
+                  {social.platform}
                 </a>
               </li>
             ))}
           </ul>
         )}
 
-        <button type="button" className={styles.topButton} onClick={scrollToTop}>
+        <button type="button" className={styles.topButton} onClick={() => scrollToTarget(0)}>
           Back to top ↑
         </button>
       </div>

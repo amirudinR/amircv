@@ -1,7 +1,18 @@
-.stack {
+/* RotatingText — a decorative stack of interchangeable words.
+   The static copy underneath is what assistive tech reads; it is clipped out of
+   the layout and the stack stays the only thing that occupies space, so nothing
+   reflows when a word changes. */
+
+.root {
   position: relative;
-  display: inline-grid;
+  display: inline-flex;
   vertical-align: top;
+  max-width: 100%;
+  border-radius: 2px;
+}
+
+.stack {
+  display: inline-grid;
 }
 
 .item {
@@ -19,6 +30,22 @@
   transform: none;
 }
 
+/* Focus is the pause control for anyone without a pointer, so it has to be
+   visible — the ring is drawn on the root, whose box is sized by the stack. */
+.root:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.staticCopy {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .item {
     opacity: 0;
@@ -28,5 +55,13 @@
 
   .itemActive {
     opacity: 1;
+  }
+}
+
+@media print {
+  /* A frozen frame of a rotating flourish is noise on a printed CV, and
+     print.css only strips `div[aria-hidden]`, not spans. */
+  .root {
+    display: none;
   }
 }

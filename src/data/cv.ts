@@ -18,12 +18,12 @@ export const cv: CV = {
     },
     {
       platform: "LinkedIn",
-      label: "Amirudin Ridwan",
+      label: "in/amirudin-ridwan",
       url: "https://www.linkedin.com/in/amirudin-ridwan-725b901ba/",
     },
     {
       platform: "Google Play",
-      label: "Published Apps",
+      label: "10 published apps",
       url: "https://play.google.com/store/apps/dev?id=5627377990901054380",
     },
     {
@@ -40,8 +40,8 @@ export const cv: CV = {
     ],
     stats: [
       { label: "Years in Tech", value: "4+" },
-      { label: "Apps Published", value: "4+" },
-      { label: "Avg. App Rating", value: "4.3" },
+      { label: "Apps Published", value: "10" },
+      { label: "Top Store Rating", value: "4.3" },
       { label: "Hardware Downtime Cut", value: "40%" },
     ],
     currentFocus:

@@ -1,31 +1,51 @@
+/* ==========================================================================
+   Contact — printed paper
+   The section is a filed record: a ruled detail block, a stamped email seal,
+   hairline "pencil" underlines. No glow anywhere; depth comes from warm
+   shadows and inset deboss only.
+   ========================================================================== */
+
 .contact {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
 }
 
+/* Printer's registration marks in the page margin — the one flourish that
+   belongs to a sheet of paper. Hidden below 768px, and print.css drops every
+   aria-hidden layer for paper. */
 .ambient {
+  --reg-ink: color-mix(in srgb, var(--ink) 22%, transparent);
   position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
+}
+
+.ambient::before,
+.ambient::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--reg-ink);
+  border-radius: 50%;
   background:
-    radial-gradient(
-      120% 62% at 50% 108%,
-      color-mix(in srgb, var(--accent) 11%, transparent) 0%,
-      transparent 62%
-    ),
-    radial-gradient(
-      70% 44% at 78% 0%,
-      color-mix(in srgb, var(--accent-2) 7%, transparent) 0%,
-      transparent 70%
-    );
-  transform: translate3d(0, 0, 0);
-  animation: ambientDrift 20s ease-in-out infinite alternate;
+    linear-gradient(var(--reg-ink), var(--reg-ink)) center / 100% 1px no-repeat,
+    linear-gradient(var(--reg-ink), var(--reg-ink)) center / 1px 100% no-repeat;
+}
+
+.ambient::before {
+  top: var(--space-6);
+  right: clamp(8px, 2.4vw, 40px);
+}
+
+.ambient::after {
+  bottom: var(--space-6);
+  left: clamp(8px, 2.4vw, 40px);
 }
 
 .inner {
   position: relative;
+  z-index: 1;
   max-width: 720px;
   margin-inline: auto;
   text-align: center;
@@ -33,49 +53,30 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-6);
-  z-index: 1;
-}
-
-@keyframes ambientDrift {
-  from {
-    transform: translate3d(-1%, 0.5%, 0);
-    opacity: 0.75;
-  }
-  to {
-    transform: translate3d(1%, -0.5%, 0);
-    opacity: 1;
-  }
-}
-
-/* Shader-inspired CSS field: transforms and opacity only animate. */
-.reducedMotion .ambient {
-  animation: none;
 }
 
 .statement {
   margin: 0;
   font-family: var(--font-display);
   font-size: var(--text-h1);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
   color: var(--text);
 }
 
-/* Keep content styling below ambient layer. */
-.ambient::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 12%, transparent) 100%);
-}
-
+/* Oxblood ink with a highlighter swipe behind the word — print.css strips
+   both the gradient fill and the background for paper. */
 .accentWord {
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--accent);
+  background-image: linear-gradient(
+    180deg,
+    transparent 56%,
+    color-mix(in srgb, var(--highlight) 58%, transparent) 56%,
+    color-mix(in srgb, var(--highlight) 58%, transparent) 93%,
+    transparent 93%
+  );
+  background-repeat: no-repeat;
 }
 
 .lede {
@@ -86,6 +87,78 @@
   color: var(--text-muted);
 }
 
+/* --- Filed record: relocation / availability details ---------------------- */
+
+.prefs {
+  width: 100%;
+  margin-top: var(--space-1);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  text-align: left;
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
+}
+
+.prefsHeading {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+}
+
+.prefsList {
+  margin: 0;
+}
+
+.prefsRow {
+  display: grid;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.prefsLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.prefsValue {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.prefsNote {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+.prefsNoteLabel {
+  margin-right: var(--space-2);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+/* --- Email row ----------------------------------------------------------- */
+
 .emailRow {
   display: flex;
   flex-wrap: wrap;
@@ -93,66 +166,112 @@
   justify-content: center;
   gap: var(--space-3);
   margin-top: var(--space-2);
+  width: 100%;
 }
 
+/* A rubber stamp pressed into the sheet. `useMagnetic` writes inline
+   transforms here, so hover/press state is expressed with depth alone —
+   never with a CSS transform. */
 .mailButton {
-  display: inline-block;
-  min-width: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1) var(--space-3);
+  min-height: 52px;
   max-width: 100%;
-  overflow-wrap: anywhere;
-  min-height: 44px;
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-3) var(--space-5);
   font-family: var(--font-mono);
-  font-size: var(--text-base);
-  color: var(--text);
   text-decoration: none;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--bg);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 90%, var(--accent-2)) 0%,
+    var(--accent) 60%,
+    color-mix(in srgb, var(--accent) 86%, var(--ink)) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--accent) 68%, var(--ink));
+  border-radius: var(--radius-sm);
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--ink) 32%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--bg) 24%, transparent),
+    var(--shadow-md);
   transition:
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background-color 0.25s ease;
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
   will-change: transform;
 }
 
 .mailButton:hover {
   border-color: var(--accent-2);
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 84%, var(--accent-2)) 0%,
+    color-mix(in srgb, var(--accent) 92%, var(--ink)) 100%
+  );
   box-shadow:
-    0 0 24px color-mix(in srgb, var(--accent) 35%, transparent),
-    0 0 64px color-mix(in srgb, var(--accent) 18%, transparent);
+    inset 0 4px 7px color-mix(in srgb, var(--ink) 42%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--bg) 18%, transparent),
+    var(--shadow-lg);
 }
 
-.mailButton:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.mailButtonLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: color-mix(in srgb, var(--bg) 78%, var(--accent));
+}
+
+.mailButtonLabel::after {
+  content: '';
+  width: 1px;
+  height: 1em;
+  background: color-mix(in srgb, var(--bg) 42%, transparent);
+}
+
+.mailAddress {
+  font-size: var(--text-base);
+  overflow-wrap: anywhere;
+  color: var(--bg);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 30%, transparent);
 }
 
 .copyButton {
-  min-height: 44px;
-  padding: var(--space-3) var(--space-5);
+  min-height: 52px;
+  padding: var(--space-3) var(--space-4);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--text);
+  color: var(--ink-soft);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
   cursor: pointer;
   transition:
-    border-color 0.25s ease,
-    color 0.25s ease,
-    background-color 0.25s ease;
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
-.copyButton:hover {
-  border-color: var(--accent);
+.copyButton:hover:not(:disabled) {
   color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
 }
 
-.copyButton:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.copyButton:active:not(:disabled) {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.copyButton:disabled {
+  opacity: 0.65;
+  cursor: progress;
 }
 
 .copyStatus {
@@ -163,90 +282,193 @@
   color: var(--text-muted);
 }
 
+/* --- Socials ------------------------------------------------------------- */
+
 .socials {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-2) var(--space-6);
+  gap: var(--space-1) var(--space-6);
   margin-top: var(--space-2);
 }
 
 .socialLink {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding-block: 10px;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--text-muted);
   text-decoration: none;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  padding-block: 10px;
-  transition: color 0.25s ease;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
-.socialLink:hover {
+/* Pencil stroke, not a glow: uneven pressure across the run, no blur. */
+.socialLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7px;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 34%, transparent) 0%,
+    var(--accent) 22%,
+    color-mix(in srgb, var(--accent) 78%, transparent) 64%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 100%
+  );
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
   color: var(--accent);
 }
 
-.socialLink:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
+.socialLink:hover::after,
+.socialLink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.socialPlatform {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.socialLink:hover .socialPlatform,
+.socialLink:focus-visible .socialPlatform {
+  color: var(--accent);
+}
+
+.socialLabel {
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+
+.socialLink:hover .socialLabel,
+.socialLink:focus-visible .socialLabel {
+  color: var(--accent);
+}
+
+/* --- Two ways to leave with the CV -------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
 }
 
 .resumeLink {
   position: relative;
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  text-decoration: none;
-  padding-bottom: 2px;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding-block: 10px;
-  transition: color 0.25s ease;
+  min-height: 48px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .resumeLink::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--accent);
+  right: 0;
+  bottom: 12px;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+    var(--accent) 20%,
+    color-mix(in srgb, var(--accent) 72%, transparent) 70%,
+    color-mix(in srgb, var(--accent) 24%, transparent) 100%
+  );
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 0.3s ease;
+  transition: transform 0.28s ease;
 }
 
-.resumeLink:hover {
-  color: var(--text);
+.resumeLink:hover,
+.resumeLink:focus-visible {
+  color: var(--accent);
 }
 
-.resumeLink:hover::after {
+.resumeLink:hover::after,
+.resumeLink:focus-visible::after {
   transform: scaleX(1);
 }
 
-.resumeLink:focus-visible {
+.printButton {
+  min-height: 48px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.printButton:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.printButton:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.mailButton:focus-visible,
+.copyButton:focus-visible,
+.socialLink:focus-visible,
+.resumeLink:focus-visible,
+.printButton:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ambient {
-    animation: none;
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .ambient::before,
+  .ambient::after {
+    display: none;
   }
 
-  .mailButton,
-  .copyButton,
-  .socialLink,
-  .resumeLink,
-  .resumeLink::after {
-    transition: none;
+  .prefs {
+    padding: var(--space-3);
   }
-}
 
-@media (max-width: 640px) {
+  .prefsRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
   .emailRow {
     flex-direction: column;
     align-items: stretch;
@@ -255,6 +477,109 @@
   .mailButton,
   .copyButton {
     width: 100%;
-    text-align: center;
+  }
+
+  .socials {
+    gap: var(--space-1) var(--space-4);
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .printButton {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mailButton,
+  .copyButton,
+  .socialLink,
+  .socialLink::after,
+  .socialLabel,
+  .socialPlatform,
+  .resumeLink,
+  .resumeLink::after,
+  .printButton {
+    transition: none;
+  }
+
+  .copyButton:hover:not(:disabled),
+  .printButton:hover,
+  .copyButton:active:not(:disabled),
+  .printButton:active {
+    transform: none;
+  }
+}
+
+/* --- Print ---------------------------------------------------------------
+   print.css owns the palette, type scale and the contact block flattening.
+   These are the rules it does not cover: the Print control (pointless on
+   paper), and the filed record, which has no print geometry of its own.
+   ------------------------------------------------------------------------ */
+@media print {
+  .printButton {
+    display: none !important;
+  }
+
+  .prefs {
+    padding: 0 0 2mm;
+    background: none;
+    border-width: 0.3mm;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .prefsHeading {
+    margin-bottom: 1.5mm;
+    padding-bottom: 1mm;
+    border-bottom-width: 0.3mm;
+  }
+
+  .prefsRow {
+    padding-block: 1mm;
+    border-bottom-width: 0.2mm;
+  }
+
+  .prefsNote {
+    margin-top: 1.5mm;
+  }
+
+  /* print.css turns the seal into a hairline oxblood link: match it. */
+  .mailButton {
+    box-shadow: none;
+  }
+
+  .mailButtonLabel,
+  .mailAddress {
+    color: var(--accent) !important;
+    text-shadow: none;
+  }
+
+  .mailButtonLabel::after {
+    display: none;
+  }
+
+  .copyButton,
+  .copyStatus {
+    display: none;
+  }
+
+  .socialLink,
+  .resumeLink {
+    min-height: 0;
+    padding-block: 0;
+  }
+
+  .socialLink::after,
+  .resumeLink::after {
+    transform: scaleX(1);
+  }
+
+  .actions {
+    margin-top: 1mm;
   }
 }

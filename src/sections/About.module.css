@@ -1,3 +1,9 @@
+/* ==========================================================================
+   About — a two-column spread: prose on the left, a ledger of numbers on the
+   right. Everything here is paper stock: index-card surfaces, a hairline rule
+   under each entry, a marker wash on the note, ink for the numbers.
+   ========================================================================== */
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -19,35 +25,57 @@
 }
 
 .paragraph {
-  color: var(--text-muted);
-  line-height: 1.7;
+  --dropcap: 3.3em;
+
+  color: var(--ink-soft);
+  line-height: 1.75;
 }
 
 .paragraph strong {
-  color: var(--text);
+  color: var(--ink);
   font-weight: 600;
 }
 
-/* Current focus callout */
+/* Drop cap on the opening paragraph: the one place a page announces itself as
+   print. Fraunces' cap-height sits high, so the float is nudged down a hair. */
+.paragraph:first-of-type::first-letter {
+  float: left;
+  margin: 0.04em var(--space-1) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--dropcap);
+  font-weight: 600;
+  line-height: 0.78;
+  color: var(--accent);
+}
+
+/* Current focus — an annotated note in the margin: oxblood rule down the
+   leading edge, marker wash behind the label. */
 .focus {
   margin-top: var(--space-2);
-  padding: var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-faint);
   border-left: 2px solid var(--accent);
-  border-radius: var(--radius);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: var(--shadow-xs);
 }
 
 .focusLabel {
+  display: inline-block;
   margin-bottom: var(--space-1);
+  padding: 0 var(--space-1);
+  rotate: -0.6deg;
+  background: color-mix(in srgb, var(--highlight) 66%, transparent);
 }
 
 .focusText {
-  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  color: var(--ink-soft);
   line-height: 1.6;
 }
 
-/* Right column — stats */
+/* Right column — the ledger */
 .stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -55,29 +83,88 @@
   will-change: transform;
 }
 
+.statsKicker {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 .statCard {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--space-1);
-  padding: var(--space-4) var(--space-2);
+  padding: var(--space-5) var(--space-3) var(--space-3);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  text-align: center;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
+}
+
+/* The tick a bookkeeper rules under a column heading. */
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--space-3);
+  width: var(--space-4);
+  height: 2px;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .statValue {
   font-family: var(--font-display);
   font-size: var(--text-h2);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  /* The count-up must not reflow the card, so the figures are tabular. */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
 }
 
 .statLabel {
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--border-faint);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--text-muted);
+}
+
+@media print {
+  /* The parallax writes a translateY on this column and print.css only resets
+     the transform one level up. */
+  .stats {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .statCard {
+    padding: 2mm 2.5mm 1.5mm !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* A decorative marginal flourish has no place on a printed CV. */
+  .statsKicker {
+    display: none !important;
+  }
+
+  /* Print body type is ~9pt, so a 3.3em cap would be a 30pt letterhead. */
+  .paragraph {
+    --dropcap: 2.4em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats {
+    will-change: auto;
+  }
 }

@@ -1,36 +1,89 @@
+/* ==========================================================================
+   Experience — a pencil line drawn down the page
+   The unfilled rail is a faint hairline; the scrubbed progress is an ink
+   stroke whose width breathes along its length (clip-path silhouette) but
+   whose extent stays readable as a progress indicator.
+   ========================================================================== */
+
 .timeline {
   position: relative;
   margin-top: var(--space-8);
 }
 
-/* Base rail line spanning the full list height */
+/* Unfilled rail: a faint ruled hairline. */
 .rail {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 24px;
-  width: 2px;
+  left: 16px;
+  width: 1px;
   background: var(--border);
   transform: translateX(-50%);
 }
 
-/* Accent progress line overlay, scaled on scroll */
+/* Drawn portion. Width 5px is masked to a 1.1–2.3px stroke by clip-path, so
+   the line reads as ink under varying pressure instead of a flat bar. The
+   gradient adds the tonal drift of a pencil that keeps hitting the same
+   shades. Extent is still governed by scaleY, so the extent stays legible. */
 .progress {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 24px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  left: 16px;
+  width: 5px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 74%, var(--bg)) 0%,
+    var(--accent) 14%,
+    color-mix(in srgb, var(--accent) 84%, var(--bg)) 46%,
+    var(--accent) 68%,
+    color-mix(in srgb, var(--accent) 70%, var(--bg)) 100%
+  );
+  clip-path: polygon(
+    34% 0%,
+    44% 6.25%,
+    32% 12.5%,
+    42% 18.75%,
+    36% 25%,
+    44% 31.25%,
+    32% 37.5%,
+    42% 43.75%,
+    36% 50%,
+    44% 56.25%,
+    32% 62.5%,
+    42% 68.75%,
+    36% 75%,
+    44% 81.25%,
+    32% 87.5%,
+    42% 93.75%,
+    34% 100%,
+    72% 100%,
+    68% 93.75%,
+    78% 87.5%,
+    66% 81.25%,
+    74% 75%,
+    68% 68.75%,
+    78% 62.5%,
+    66% 56.25%,
+    74% 50%,
+    68% 43.75%,
+    78% 37.5%,
+    66% 31.25%,
+    74% 25%,
+    68% 18.75%,
+    78% 12.5%,
+    66% 6.25%,
+    72% 0%
+  );
   transform: translateX(-50%) scaleY(0);
-  transform-origin: top;
+  transform-origin: top center;
   will-change: transform;
 }
 
 .list {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 var(--space-12);
+  padding: 0 0 0 var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
@@ -40,33 +93,34 @@
   position: relative;
 }
 
-/* Node dot on the rail */
+/* Node dot: a hollow ink ring until the card scrolls into view. */
 .dot {
   position: absolute;
   top: var(--space-6);
-  /* rail is 24px left of the list padding edge; pull dot back onto it */
-  left: calc(-1 * var(--space-12) + 24px);
+  /* Align the dot on the rail: rail sits 16px in, list content starts at 48px. */
+  left: calc(-1 * var(--space-6) + 16px);
   width: 12px;
   height: 12px;
+  border: 1.5px solid var(--border-strong);
   border-radius: 50%;
-  border: 2px solid var(--accent);
   background: var(--bg);
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.88);
   transition:
-    background-color 300ms ease,
-    box-shadow 300ms ease;
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 320ms ease,
+    border-color 320ms ease;
 }
 
-/* Exported so Experience.tsx can toggle it via classList */
-.active {
-  /* state marker only */
-}
-
-.entry.active .dot {
+/* Reached. Three cues that are not colour: the ring fills solid, it grows,
+   and a second ring is stamped outside it (the paper gap keeps the rail from
+   showing through the node). */
+.active .dot {
   background: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(-50%) scale(1);
   box-shadow:
-    0 0 0 4px var(--bg),
-    0 0 16px var(--accent);
+    0 0 0 3px var(--bg),
+    0 0 0 4px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 @media (max-width: 640px) {
@@ -89,7 +143,8 @@
     transform: translateX(-50%) scaleY(1);
   }
 
-  .dot {
+  .dot,
+  .active .dot {
     transition: none;
   }
 }

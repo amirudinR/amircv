@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, MouseEvent } from 'react';
 import type { Project } from '@/data/types';
 import { Badge } from '@/components/Badge';
@@ -13,6 +13,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [demoActive, setDemoActive] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const frameRef = useRef<number | null>(null);
@@ -68,6 +69,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
     '--tilt-y': '0deg',
   } as CSSProperties;
 
+  // A Google Play listing is a store link, not a live demo, and both fields
+  // currently hold the same URL on store projects — so dedupe by href and
+  // label each link for what it actually is.
+  const links = [
+    ...(project.storeUrl ? [{ href: project.storeUrl, label: 'Store' }] : []),
+    ...(project.liveUrl && project.liveUrl !== project.storeUrl
+      ? [{ href: project.liveUrl, label: 'Live site' }]
+      : []),
+    ...(project.repoUrl ? [{ href: project.repoUrl, label: 'Code' }] : []),
+  ].filter(
+    (link, index, all) => all.findIndex((other) => other.href === link.href) === index,
+  );
+
+  const proof = [
+    project.rating,
+    project.installs ? `${project.installs} installs` : undefined,
+  ].filter(Boolean);
+
   return (
     <article
       ref={ref}
@@ -82,6 +101,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <h3 className={styles.title}>{project.title}</h3>
         <span className={styles.year}>{project.year}</span>
       </div>
+
+      {proof.length > 0 && (
+        <p className={styles.proof} title="Publicly listed on Google Play">
+          {proof.join(' · ')}
+        </p>
+      )}
 
       <p className={styles.summary}>{project.summary}</p>
 
@@ -140,37 +165,47 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       )}
 
-      {(project.liveUrl || project.repoUrl) && (
+      {links.length > 0 && (
         <div className={styles.links}>
-          {project.liveUrl && (
+          {links.map((link) => (
             <a
+              key={link.href}
               className={styles.link}
-              href={project.liveUrl}
+              href={link.href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label={`${project.title}: ${link.label} (opens in a new tab)`}
             >
-              Live ↗
+              {link.label} ↗
             </a>
-          )}
-          {project.repoUrl && (
-            <a
-              className={styles.link}
-              href={project.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Code ↗
-            </a>
-          )}
+          ))}
         </div>
       )}
 
       {project.mockupType && (
-        <div className={styles.demo}>
-          <PhoneMockup
-            type={project.mockupType}
-            size={project.featured ? 'md' : 'sm'}
-          />
+        <div
+          className={`${styles.demo}${demoActive ? ` ${styles.demoActive}` : ''}`}
+          tabIndex={0}
+          role="group"
+          aria-label={`Interactive demo: ${project.title}. Focus to explore the controls inside.`}
+          onPointerEnter={() => setDemoActive(true)}
+          onPointerLeave={() => setDemoActive(false)}
+          onFocus={() => setDemoActive(true)}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+              setDemoActive(false);
+            }
+          }}
+        >
+          <span className={styles.demoHint} aria-hidden="true">
+            Interactive demo
+          </span>
+          <div className={styles.demoDevice} inert={!demoActive}>
+            <PhoneMockup
+              type={project.mockupType}
+              size={project.featured ? 'md' : 'sm'}
+            />
+          </div>
         </div>
       )}
     </article>

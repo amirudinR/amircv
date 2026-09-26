@@ -1,5 +1,7 @@
 .footer {
   border-top: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--surface) 55%, transparent);
+  box-shadow: var(--shadow-sm);
   padding-block: var(--space-8);
   /* Clear the iOS home indicator */
   padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0));
@@ -25,18 +27,32 @@
   list-style: none;
 }
 
+/* Underline is drawn on hover only, so it does not shift the row. */
 .socialLink {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--text-muted);
-  text-decoration: none;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: transparent;
   padding-block: 10px;
-  transition: color 0.3s ease;
+  border-radius: 2px;
+  transition:
+    color 0.25s ease,
+    text-decoration-color 0.25s ease;
 }
 
-.socialLink:hover,
+.socialLink:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 .socialLink:focus-visible {
   color: var(--accent);
+  text-decoration-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .topButton {
@@ -46,13 +62,27 @@
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--text-muted);
-  transition: color 0.3s ease;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: transparent;
+  border-radius: 2px;
+  transition:
+    color 0.25s ease,
+    text-decoration-color 0.25s ease;
 }
 
-.topButton:hover,
+.topButton:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 .topButton:focus-visible {
   color: var(--accent);
+  text-decoration-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 @media (max-width: 640px) {

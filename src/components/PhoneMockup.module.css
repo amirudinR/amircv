@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .phone {
-  --phone-maxw: 252px;
+  --phone-maxw: 150px;
   position: relative;
   width: 100%;
   max-width: var(--phone-maxw);
@@ -24,8 +24,8 @@
 }
 
 .phoneSm {
-  --phone-maxw: 206px;
-  border-radius: 36px;
+  --phone-maxw: 124px;
+  border-radius: 30px;
 }
 
 .phone::before {

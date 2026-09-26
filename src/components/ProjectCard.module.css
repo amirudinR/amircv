@@ -22,6 +22,7 @@
 
 .featuredTag {
   grid-area: featured;
+  align-self: start;
   justify-self: start;
   width: fit-content;
   font-family: var(--font-mono);
@@ -29,9 +30,8 @@
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--accent);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 2px var(--space-2);
+  border-bottom: 1px solid var(--accent);
+  padding: 0 0 2px;
   line-height: 1.4;
 }
 
@@ -52,6 +52,14 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+.proof {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
 }
 
 .summary {
@@ -100,10 +108,57 @@
   transform: scaleX(1);
 }
 
-/* Interactive demo embed */
+/* Interactive demo embed.
+   The mockups are decorative UI replicas, not real apps. They stay inert until
+   hovered or focused so their ~20 internal controls are one tab stop instead of
+   a wall of fake buttons in the page's tab order. */
 .demo {
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: var(--space-2);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: default;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.demo:hover,
+.demo:focus-within,
+.demoActive {
+  border-style: solid;
+  border-color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 5%, transparent);
+}
+
+.demoDevice {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.demoHint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.demoActive .demoHint,
+.demo:hover .demoHint,
+.demo:focus-within .demoHint {
+  opacity: 0;
 }
 
 /* Featured: two-column layout (content + live phone demo) */
@@ -111,15 +166,20 @@
   display: grid;
   grid-template-columns:
     minmax(0, 1fr)
-    minmax(0, 254px);
+    minmax(0, 168px);
   grid-template-areas:
     'featured demo'
     'header demo'
+    'proof demo'
     'summary demo'
     'case demo'
     'outcomes demo'
     'tech demo'
     'links demo';
+  /* Without this the demo column, which spans every row, stretches each row to
+     its own height and the grid grows far taller than its content. */
+  grid-auto-rows: min-content;
+  align-content: start;
   column-gap: var(--space-4);
   gap: var(--space-3) var(--space-4);
 }
@@ -136,6 +196,7 @@
 
 .featured .demo {
   grid-area: demo;
+  align-self: start;
   padding-top: var(--space-2);
 }
 
@@ -261,6 +322,7 @@
     grid-template-areas:
       'featured'
       'header'
+      'proof'
       'demo'
       'summary'
       'case'
