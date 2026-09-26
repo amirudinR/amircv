@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "resume": "node scripts/generate-resume-pdf.mjs",
+    "build": "tsc -b && npm run resume && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
