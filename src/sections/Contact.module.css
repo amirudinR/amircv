@@ -66,14 +66,16 @@
 }
 
 /* Oxblood ink with a highlighter swipe behind the word — print.css strips
-   both the gradient fill and the background for paper. */
+   both the gradient fill and the background for paper. The band is a token
+   rather than raw `--highlight` because the type on top of it changes colour
+   with the theme, and bright yellow under warm-white type is unreadable. */
 .accentWord {
   color: var(--accent);
   background-image: linear-gradient(
     180deg,
     transparent 56%,
-    color-mix(in srgb, var(--highlight) 58%, transparent) 56%,
-    color-mix(in srgb, var(--highlight) 58%, transparent) 93%,
+    var(--highlight-band) 56%,
+    var(--highlight-band) 93%,
     transparent 93%
   );
   background-repeat: no-repeat;
@@ -82,6 +84,9 @@
 .lede {
   margin: 0;
   max-width: 52ch;
+  /* The block stays centred; the lines inside it do not. A four-line centred
+     paragraph gives the eye no consistent left edge to return to. */
+  text-align: left;
   font-size: var(--text-base);
   line-height: 1.7;
   color: var(--text-muted);

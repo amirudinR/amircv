@@ -215,7 +215,7 @@
 .skillRelated > span {
   color: var(--ink);
   border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  background: color-mix(in srgb, var(--highlight) 30%, transparent);
+  background: var(--highlight-band);
 }
 
 /* Selected: pressed into the sheet, so the button itself takes the tint. */

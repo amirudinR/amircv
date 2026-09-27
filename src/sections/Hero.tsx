@@ -77,6 +77,13 @@ export function Hero({ profile, socials }: HeroProps) {
   // Only the WebGL scene needs this; everything else re-themes through the
   // tokens alone, so there is no class to add at the section root.
   const theme = useResolvedTheme();
+  // First letter of each of the first two words: "Amirudin Ridwan" -> "AR".
+  const monogram = profile.name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('');
   const sectionRef = useRef<HTMLElement | null>(null);
   const bgRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -272,11 +279,12 @@ export function Hero({ profile, socials }: HeroProps) {
                 </li>
               ))}
             </ul>
-            {/* A stamp applies its own short legend rather than repeating the
-                status line verbatim. Derived from the same data — no new claim —
-                so it stays honest if `availability` is reworded. */}
-            <PaperStamp className={styles.stamp}>
-              {profile.availability.split(/\s+/).slice(0, 3).join(' ')}
+            {/* A maker's seal, not a second caption. It used to print the first
+                three words of `availability`, which put a shortened copy of the
+                eyebrow directly beneath it. Initials come from `name`, so the seal
+                carries no claim of its own. */}
+            <PaperStamp className={styles.stamp} tilt={-8}>
+              {monogram}
             </PaperStamp>
           </div>
 

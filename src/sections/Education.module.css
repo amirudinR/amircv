@@ -78,8 +78,8 @@
   color: var(--ink);
   background-image: linear-gradient(
     to top,
-    var(--highlight) 0,
-    var(--highlight) 42%,
+    var(--highlight-band) 0,
+    var(--highlight-band) 42%,
     transparent 42%
   );
 }

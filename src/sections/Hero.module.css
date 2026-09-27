@@ -310,7 +310,7 @@
 .socialLink {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding-block: 4px;
   border-bottom: 1px solid var(--border-faint);
   color: var(--text);
@@ -533,6 +533,34 @@
   .scrollIndicator {
     display: none;
   }
+}
+
+/* Dark ground. The construction lines are all mixed from `--ink`, which is
+   near-white on a near-black sheet, so a percentage that reads as a faint
+   pencil on cream reads as bright scaffolding here. The drafting circles carry
+   it most, so they are pulled down hardest. */
+:global([data-theme='dark']) .grid {
+  background-image:
+    repeating-linear-gradient(to right, var(--border-faint) 0 1px, transparent 1px var(--space-4)),
+    repeating-linear-gradient(to bottom, var(--border-faint) 0 1px, transparent 1px var(--space-4)),
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--ink) 5%, transparent) 0 1px,
+      transparent 1px calc(var(--space-4) * 5)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ink) 5%, transparent) 0 1px,
+      transparent 1px calc(var(--space-4) * 5)
+    );
+}
+
+:global([data-theme='dark']) .rings span {
+  border-color: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+:global([data-theme='dark']) .rings span:nth-child(2) {
+  border-color: color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -45,6 +45,15 @@
      dark in both themes because the highlighter is light in both. */
   --selection-ink: #1a1814;
 
+  /* The highlighter band that *text sits on*, which is not the same problem as
+     a highlighter band that is only decoration. Against a light sheet the band
+     is bright yellow and the type on it is dark; the same band on a near-black
+     sheet has to become a dim amber, because warm-white type on bright yellow
+     is 1.1:1. This is why the two themes differ here instead of sharing
+     `--highlight`: the decoration wants the full-strength yellow in both, and
+     the band wants whatever keeps its type readable. */
+  --highlight-band: color-mix(in srgb, var(--highlight) 60%, transparent);
+
   --scrollbar-thumb: #cfc7b4;
 
   /* WebGL scene — read by the R3F components via getComputedStyle */
@@ -146,6 +155,10 @@
 
   --press-hi: rgba(0, 0, 0, 0.5);
   --press-lo: rgba(242, 237, 227, 0.05);
+
+  /* See the light-theme note: on a near-black sheet the band becomes a dim
+     amber so warm-white and salmon type can sit on it and still clear 3:1. */
+  --highlight-band: color-mix(in srgb, var(--highlight) 20%, transparent);
 
   --well: rgba(242, 237, 227, 0.07);
   --well-hover: rgba(242, 237, 227, 0.12);

@@ -285,6 +285,10 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+  /* Takes the leftover height inside the flexible .receipt and scrolls if the
+     basket outgrows it, instead of letting the receipt overflow. */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   list-style: none;
 }
@@ -294,6 +298,10 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
+  /* Rows are flex items in a column, so they are shrinkable by default. Pinning
+     them keeps each row at its own line height even if the basket grows past
+     the receipt, where they would otherwise compress. */
+  flex: none;
 }
 
 .cartName {

@@ -1,5 +1,10 @@
 /* Rubber-stamp impression. Edge tearing and uneven ink coverage come from the
-   SVG filter wired up in PaperStamp.tsx; everything else is plain CSS. */
+   SVG filter wired up in PaperStamp.tsx; everything else is plain CSS.
+
+   Sized for a maker's seal — two initials, set large. The stamp used to carry
+   three words of the availability line, which printed a second, shorter version
+   of the eyebrow directly above it. A monogram is what a seal is for, and it
+   repeats nothing. */
 
 .stamp {
   --stamp-tilt: -7deg;
@@ -9,10 +14,12 @@
   rotate: calc(var(--stamp-tilt) * var(--stamp-tilt-scale));
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-h3);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: 0.18em;
+  line-height: 1.1;
+  letter-spacing: 0.22em;
+  /* Trailing tracking would push the seal off-centre inside its frame. */
+  text-indent: 0.22em;
   text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
@@ -56,8 +63,9 @@
   .stamp {
     --stamp-tilt-scale: 0.4;
 
-    font-size: 0.6rem;
-    letter-spacing: 0.14em;
+    font-size: var(--text-base);
+    letter-spacing: 0.18em;
+    text-indent: 0.18em;
   }
 
   .frame {

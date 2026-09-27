@@ -213,6 +213,10 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
+  /* 44px floor: these are the diagram's only controls, and at 28px they were
+     the smallest tap targets on the page. The extra height is absorbed as
+     padding so the type size stays as set. */
+  min-height: 44px;
   padding: 6px var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
