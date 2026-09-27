@@ -42,7 +42,8 @@ interface BeamLayout {
 
 const TERMINAL_GAP = 5;
 const REACH_RATIO = 0.45;
-const VERTICAL_BOW = 12;
+/** Sideways drift, as a share of the wire's own lateral offset. */
+const BOW_RATIO = 0.28;
 const CONSTRUCTION_OFFSET = 9;
 const PACKET_SAMPLES = 20;
 const PACKET_SPEED = 46;
@@ -84,8 +85,14 @@ function makeWire(
   const start = { x: from.x + direction.x * fromInset, y: from.y + direction.y * fromInset };
   const end = { x: to.x - direction.x * toInset, y: to.y - direction.y * toInset };
   const span = horizontal ? Math.abs(end.x - start.x) : Math.abs(end.y - start.y);
-  const reach = Math.max(18, span * REACH_RATIO);
-  const bow = horizontal ? 0 : VERTICAL_BOW;
+  // Capping the reach at half the span is what keeps the cubic from inverting:
+  // control points that cross back over each other draw a loop, not a bow. The
+  // stacked layout on mobile has ~20px between nodes, where an absolute floor
+  // would overshoot the span and scribble over the pill edges.
+  const reach = Math.min(span * REACH_RATIO, span / 2);
+  // The sideways bow is taken from the wire's own lateral offset rather than a
+  // constant, so a column of nodes sharing a centre line stays a straight rule.
+  const bow = horizontal ? 0 : dx * BOW_RATIO;
   const lift = horizontal ? 0 : Math.sign(dy) * reach;
   const c1 = { x: start.x + (horizontal ? reach : bow), y: start.y + lift };
   const c2 = { x: end.x - (horizontal ? reach : bow), y: end.y - lift };
@@ -132,17 +139,20 @@ export function AnimatedBeam({
     if (width < 2 || height < 2) return;
 
     const centres: Point[] = [];
-    const halves: number[] = [];
+    const sizes: { w: number; h: number }[] = [];
     for (let index = 0; index < count; index += 1) {
       const element = nodeRefs.current[index];
       if (!element) return;
       const rect = element.getBoundingClientRect();
-      const horizontal = Math.abs(rect.width) >= Math.abs(rect.height);
       centres.push({
         x: rect.left - stageBox.left + rect.width / 2,
         y: rect.top - stageBox.top + rect.height / 2,
       });
-      halves.push(horizontal ? rect.width / 2 : rect.height / 2);
+      // Both dimensions are kept: which one insets a wire depends on the axis
+      // that wire runs along, not on the node's own proportions. A 44px-tall
+      // pill in the mobile column is wide, and insetting by its width instead
+      // of its height left the connectors 10px short of the pill edges.
+      sizes.push({ w: rect.width, h: rect.height });
     }
 
     const wires: Wire[] = [];
@@ -150,7 +160,19 @@ export function AnimatedBeam({
       const from = centres[index];
       const to = centres[index + 1];
       if (!from || !to) break;
-      wires.push(makeWire(from, to, halves[index] ?? 0, halves[index + 1] ?? 0, index));
+      const horizontal = Math.abs(to.x - from.x) >= Math.abs(to.y - from.y);
+      const fromSize = sizes[index];
+      const toSize = sizes[index + 1];
+      if (!fromSize || !toSize) break;
+      wires.push(
+        makeWire(
+          from,
+          to,
+          (horizontal ? fromSize.w : fromSize.h) / 2,
+          (horizontal ? toSize.w : toSize.h) / 2,
+          index,
+        ),
+      );
     }
 
     setLayout((previous) =>

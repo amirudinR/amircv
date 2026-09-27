@@ -265,11 +265,25 @@
 }
 
 @media (max-width: 767px) {
+  /* Four pills of four different widths, each shrunk to its own content and
+     then centred, read as a ragged pile. Stretched full width and left-aligned
+     they read as a numbered step list — and because every node then shares one
+     centre line, the wire between two of them is a straight rule. */
   .nodes {
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     gap: var(--space-5);
+  }
+
+  .nodeSlot {
+    width: 100%;
+  }
+
+  .node {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
 
