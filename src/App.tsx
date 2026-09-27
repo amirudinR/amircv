@@ -10,6 +10,7 @@ import { Skills } from '@/sections/Skills'
 import { Experience } from '@/sections/Experience'
 import { Projects } from '@/sections/Projects'
 import { Education } from '@/sections/Education'
+import { PressPlay } from '@/sections/PressPlay'
 import { Contact } from '@/sections/Contact'
 
 const links = [
@@ -19,6 +20,7 @@ const links = [
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
   { id: 'education', label: 'Education' },
+  { id: 'press', label: 'Press' },
   { id: 'contact', label: 'Contact' },
 ]
 
@@ -42,6 +44,7 @@ export default function App() {
         <Experience items={cv.experience} />
         <Projects projects={cv.projects} />
         <Education items={cv.education} />
+        <PressPlay profile={cv.profile} />
         <Contact
           profile={cv.profile}
           socials={cv.socials}

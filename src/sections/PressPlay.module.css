@@ -1,0 +1,443 @@
+/* ==========================================================================
+   Ink Press — a playable platen press.
+
+   The stage is the same box in both renderers: the 3D canvas fills it, and the
+   CSS fallback is drawn in the same coordinates. Both read `--travel` (0 at
+   rest, 1 in contact) and `--open` (0–1, how far into the judgement window we
+   are) from the stage, written once per frame by the section's clock.
+
+   Layout is a two-column stage + panel on desktop, stacked on a phone. The
+   stage keeps a fixed aspect ratio so the camera fit and the fallback geometry
+   are both stable.
+   ========================================================================== */
+
+.layout {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: var(--space-6);
+  }
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 90% at 50% 8%, color-mix(in srgb, var(--surface) 92%, transparent), transparent 70%),
+    var(--surface-2);
+  box-shadow: var(--shadow-md);
+}
+
+.stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* The verdict chip, pinned to the bottom of the stage. Colour carries the same
+   meaning as the slot it mirrors, but the word is what says it. */
+.chip {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-2);
+  translate: -50% 0;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  animation: chip-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chip_perfect {
+  color: var(--accent);
+}
+
+.chip_good {
+  color: var(--accent-2);
+}
+
+.chip_miss {
+  color: var(--text-muted);
+}
+
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    translate: -50% 6px;
+  }
+}
+
+/* --- The CSS press ------------------------------------------------------- */
+/* Drawn from percentages of the stage so it scales with the box, and driven by
+   --travel so the platen falls in step with the same clock the 3D scene reads.
+
+   Not a copy of the 3D machine. Without shading to give it volume, a literal
+   transcription reads as a black box over a brown bar; and matching the 3D's
+   proportions makes the registration ring — a metre across on a 3.5-unit bed —
+   swallow the whole stage. So this is a ruled technical diagram instead: a
+   frame, a slab that falls, a target on the bed, and the impressions it leaves.
+   Which is also the idiom the rest of the page already speaks.
+
+   Vertical layout, as fractions of the stage height:
+     frame 16–76% · platen 24–38% → pressed 74% · bed rule at 76%
+     prints centred on 71%, ring centred on 71%
+   The travel multiplier is 257% because the platen is 14% of the stage tall and
+   has to cover 36% of it. The horizontal multiplier is the same arithmetic
+   against the print row: centres span ±33.6% of the stage, 16.8% apart, which
+   is 305% of the platen's own width. The frame is wider than the print row on
+   purpose — a platen hanging outside its own frame reads as broken. */
+.fbFrame {
+  position: absolute;
+  inset: 16% 4% 24% 4%;
+  border: 1px solid var(--border);
+  border-bottom: 4px solid color-mix(in srgb, var(--accent-2) 60%, var(--ink));
+  border-radius: 2px;
+}
+
+.fbPlaten {
+  position: absolute;
+  left: 50%;
+  top: 24%;
+  width: 22%;
+  height: 14%;
+  translate: calc(-50% + (var(--slot-norm, 0.5) - 0.5) * 305%) calc(var(--travel, 0) * 257%);
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ink-soft) 55%, var(--surface)),
+    var(--ink-soft)
+  );
+  box-shadow: var(--shadow-xs);
+}
+
+.fbPlatenMark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(0.6rem, 1.9vw, 0.8rem);
+  color: color-mix(in srgb, var(--surface) 40%, transparent);
+}
+
+.fbRing,
+.fbRingInner {
+  position: absolute;
+  left: 50%;
+  top: 71%;
+  /* Percentages in `translate` resolve against the element's own box, not the
+     containing block — so the multiplier is 33.6% of the stage re-expressed as
+     a percentage of this element's own width, which is 611% at 11% wide and
+     1034% at 6.5%. Getting this backwards slides the ring a few pixels and
+     leaves it stranded between two impressions. */
+  translate: calc(-50% + (var(--slot-norm, 0.5) - 0.5) * 611%) -50%;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+}
+
+.fbRing {
+  width: 11%;
+  aspect-ratio: 1;
+  /* The same squeeze the 3D ring performs, from the same number. */
+  scale: calc(1 + 0.45 * (1 - var(--travel, 0)));
+  opacity: 0.65;
+}
+
+.fbRingInner {
+  width: 6.5%;
+  aspect-ratio: 1;
+  border-width: 2px;
+  translate: calc(-50% + (var(--slot-norm, 0.5) - 0.5) * 1034%) -50%;
+  /* Reduced motion cannot animate a squeeze, so the cue lands here as a
+     discrete change instead — the same substitution the 3D scene makes. */
+  opacity: calc(0.18 + 0.72 * var(--open, 0));
+}
+
+.fbPrints {
+  position: absolute;
+  inset: 63% 8% auto 8%;
+  height: 16%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fbPrint {
+  position: absolute;
+  top: 0;
+  /* Centres at 10/30/50/70/90% of the row, so the outermost marks sit inside
+     the frame instead of hanging off its ends. */
+  left: calc(10% + var(--slot) * 20%);
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 15%;
+  aspect-ratio: 1;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: clamp(0.45rem, 1.2vw, 0.58rem);
+}
+
+.fbPrint_perfect {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  rotate: -1deg;
+}
+
+.fbPrint_good {
+  color: color-mix(in srgb, var(--ink) 62%, transparent);
+  rotate: 4deg;
+}
+
+.fbPrint_miss {
+  color: color-mix(in srgb, var(--ink) 26%, transparent);
+  rotate: 11deg;
+  border-style: dashed;
+}
+
+/* --- Panel --------------------------------------------------------------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.intro {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  max-width: 46ch;
+}
+
+.readout {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--well);
+}
+
+.readout dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.readout dd {
+  font-family: var(--font-mono);
+  font-size: var(--text-h3);
+  line-height: 1.2;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.readoutMax {
+  font-size: 0.62em;
+  color: var(--text-muted);
+}
+
+.stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+  transition: translate 0.12s ease, box-shadow 0.12s ease;
+}
+
+.stamp:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.stamp:active {
+  translate: 0 2px;
+  box-shadow: none;
+}
+
+.hint,
+.motionNote {
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.motionNote {
+  padding: var(--space-2);
+  border-left: 2px solid var(--accent-2);
+  background: var(--well);
+}
+
+kbd {
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--text);
+}
+
+/* The sheet. The one part of the game that has to be readable at 320px.
+   Five across is right while there is room for the widest word ("Perfect") plus
+   its tracking, but at 390px that column is 67px and the word alone wants 50 —
+   and `auto-fit` then lands on four columns, stranding a single slot on its own
+   row. Below 560px it becomes a list instead: taller, but nothing to clip and
+   nothing orphaned. */
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+@media (max-width: 559px) {
+  .sheet {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .slot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    padding: 6px var(--space-2);
+  }
+
+  .slotVerdict {
+    font-size: 0.66rem;
+  }
+}
+
+.slotMark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+}
+
+.slotVerdict {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.slotPending {
+  color: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+/* The next impression, so the eye knows where the run is. */
+.slotNext {
+  border-color: var(--border-strong);
+  border-style: dashed;
+  color: var(--accent);
+}
+
+.slot_perfect {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--highlight-band) 50%, var(--surface));
+}
+
+.slot_good {
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+}
+
+.slot_miss {
+  color: color-mix(in srgb, var(--ink) 26%, transparent);
+  border-style: dashed;
+}
+
+.announce {
+  min-height: 1.2em;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.grade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--well);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.gradeTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--ink);
+}
+
+@media (max-width: 899px) {
+  .stage {
+    min-height: 200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    animation: none;
+  }
+
+  .stamp {
+    transition: none;
+  }
+
+  .stamp:active {
+    translate: none;
+  }
+}

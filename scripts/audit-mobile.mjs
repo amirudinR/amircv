@@ -408,6 +408,7 @@ try {
     for (const [name, selector] of [
       ['about', '#about'],
       ['projects', '#projects'],
+      ['press', '#press'],
       ['contact', '#contact'],
     ]) {
       await evaluate(

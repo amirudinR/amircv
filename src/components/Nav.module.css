@@ -271,17 +271,29 @@
   background: var(--accent);
 }
 
-@media (max-width: 767px) {
-  .links {
+/* The section readout is the first thing to go when the bar runs out of room.
+   Eight links plus a wordmark and the theme toggle need roughly 680px of
+   content, so the readout — a decorative "07 / 08" that the active underline
+   and `aria-current` already duplicate — has to be the one that yields. */
+@media (max-width: 1199px) {
+  .sectionProgress {
     display: none;
   }
+}
 
-  /* The readout is dropped on phones, not on tablets. With the theme toggle
-     and the menu button both claiming 44px, the cluster is ~180px of a 390px
-     bar, so keeping the readout pushed the two buttons into the middle of the
-     bar with the logo stranded on the left. The mobile panel already marks the
-     current section, so nothing is lost. */
-  .sectionProgress {
+/* The link row tightens a step before the menu button appears. */
+@media (max-width: 1099px) {
+  .links {
+    gap: var(--space-3);
+  }
+}
+
+/* Below this the full link row no longer fits beside the controls, so the bar
+   becomes a menu button. The panel marks the current section, so nothing is
+   lost. Eight links is what pushed this out to 900 from the 768 it used to be:
+   at 768 the controls were being pushed to 1002px, off the side of the screen. */
+@media (max-width: 899px) {
+  .links {
     display: none;
   }
 

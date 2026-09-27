@@ -23,6 +23,8 @@ const READING_LINE = HEADER_HEIGHT + 24;
 const BOTTOM_EPSILON = 2;
 /** Scroll distance after which the bar switches to its opaque state. */
 const SCROLLED_AT = 40;
+/** Where the bar stops being a menu button. Keep in step with Nav.module.css. */
+const DESKTOP_QUERY = '(min-width: 900px)';
 
 export function Nav({ links }: NavProps) {
   const [activeId, setActiveId] = useState<string>(links[0]?.id ?? '');
@@ -143,9 +145,11 @@ export function Nav({ links }: NavProps) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isOpen]);
 
-  // Close the mobile menu when the layout returns to the desktop breakpoint
+  // Close the mobile menu when the layout returns to the desktop breakpoint.
+  // Must stay in step with the same breakpoint in Nav.module.css, which is why
+  // it is named rather than inlined at both ends.
   useEffect(() => {
-    const query = window.matchMedia('(min-width: 768px)');
+    const query = window.matchMedia(DESKTOP_QUERY);
     const onChange = (event: MediaQueryListEvent) => {
       if (event.matches) setIsOpen(false);
     };

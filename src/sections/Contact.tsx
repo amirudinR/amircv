@@ -71,7 +71,7 @@ export function Contact({ profile, socials, preferences }: ContactProps) {
   };
 
   return (
-    <Section id="contact" eyebrow="06 — Contact" title="Let's build something" className={styles.contact}>
+    <Section id="contact" eyebrow="07 — Contact" title="Let's build something" className={styles.contact}>
       <div className={styles.ambient} aria-hidden="true" />
       <div className={styles.inner}>
         <p className={`reveal ${styles.statement}`}>
