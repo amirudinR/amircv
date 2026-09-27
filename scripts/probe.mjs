@@ -239,13 +239,31 @@ await new Promise((resolve, reject) => {
     }
 
     // Optional wait-for selector. A fixed sleep is a guess, and a lazy scene is
-    // exactly the thing that makes the guess wrong: Vite transforms a first-time
-    // dependency like drei on demand, so the canvas can be seconds behind the
-    // scroll. Polls instead, and reports whether it ever showed up.
+    // exactly the thing that makes the guess wrong: Vite transforms a
+    // first-time dependency like drei on demand, so the canvas can be seconds
+    // behind the scroll. Polls instead, and reports whether it ever showed up.
+    //
+    // The scroll is re-asserted every poll rather than once up front. A lazy
+    // hero and web fonts both land after first paint and reflow the document, so
+    // a target that was centred can be off-screen again by the time the scene
+    // is ready — and a section that never intersects is a section whose scene
+    // correctly never mounts, which looks exactly like a broken deploy.
     const waitFor = positional[6]
     if (waitFor) {
+      const resettle = () => {
+        if (!scrollTo) return Promise.resolve()
+        return send(
+          'Runtime.evaluate',
+          {
+            expression: `document.querySelector('${scrollTo}')?.scrollIntoView({behavior:'instant',block:'center'}); 1`,
+          },
+          sessionId,
+        )
+      }
+
       let found = false
       for (let i = 0; i < 50 && !found; i += 1) {
+        await resettle()
         const r = await send(
           'Runtime.evaluate',
           { expression: `!!document.querySelector('${waitFor}')`, returnByValue: true },

@@ -26,7 +26,19 @@ const CONTEXT_TYPES = ['webgl2', 'webgl'] as const;
 const MIN_CORES = 2;
 const MIN_DEVICE_MEMORY_GB = 2;
 
-let webglSupport: boolean | null = null;
+/**
+ * A successful probe is cached for good. A failure is not: Chrome's GPU process
+ * is still starting on a first load, and a context requested in that window can
+ * come back null on a machine that supports WebGL perfectly well. Caching that
+ * would disable the 3D scene for the whole page lifetime over a transient, and
+ * the visitor would get the static artwork on hardware that could have run it.
+ *
+ * The retry is rate-limited instead, so a section that asks on every render does
+ * not allocate a context per frame.
+ */
+const NEGATIVE_RETRY_MS = 1000;
+let webglSupported: boolean | null = null;
+let lastProbeAt = 0;
 
 function probeWebGL(): boolean {
   if (typeof document === 'undefined') return false;
@@ -53,8 +65,14 @@ function probeWebGL(): boolean {
 
 /** True when a WebGL context can actually be created in this browser. */
 export function supportsWebGL(): boolean {
-  webglSupport ??= probeWebGL();
-  return webglSupport;
+  if (webglSupported === true) return true;
+
+  const now = Date.now();
+  if (webglSupported === false && now - lastProbeAt < NEGATIVE_RETRY_MS) return false;
+
+  lastProbeAt = now;
+  webglSupported = probeWebGL();
+  return webglSupported;
 }
 
 /** True when the user asked for less data, or the device is very low spec. */

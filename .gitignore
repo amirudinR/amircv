@@ -14,3 +14,5 @@ design-system/
 .freebuff/
 .vercel/
 text_*.json
+
+.vercel

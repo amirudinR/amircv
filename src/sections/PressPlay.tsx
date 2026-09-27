@@ -252,6 +252,12 @@ export function PressPlay({ profile }: PressPlayProps) {
         if (entry.isIntersecting) {
           setActive(true);
           setMounted3d(true);
+          // The scene is decided in a state initialiser, which on a first load
+          // can beat Chrome's GPU process to the punch and get a false negative
+          // from the capability probe. Now that the section is actually on
+          // screen, the GPU process has had time to come up, so ask again
+          // rather than leaving the visitor on the flat diagram for good.
+          setSceneEnabled((enabled) => enabled || shouldRenderScene());
           if (pausedAtRef.current !== null) {
             const shift = now - pausedAtRef.current;
             pausedAtRef.current = null;
